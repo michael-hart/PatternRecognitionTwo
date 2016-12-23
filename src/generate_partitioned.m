@@ -25,7 +25,26 @@ load(strjoin({res_path 'wine.data.csv'}, filesep));
 labels = wine_data(:, 1);
 wine_data = wine_data(:, 2:end);
 
+% Class 1 is from 1 to 59
+% Class 2 is from 60 to 130, offset 59, total 71
+% Class 3 is from 131 to 178, offset 130, total 48
+
 % Next is to sort data set into 118 training, 20 validation, 40 test
+% Class 1 split into: 39 - 7 - 13
+% Class 2 split into: 47 - 8 - 16
+% Class 3 split into: 32 - 5 - 11
+
+% Random split
+order1 = randperm(59);
+order2 = randperm(71) + 59;
+order3 = randperm(48) + 130;
+new_order = [order1 order2 order3];
+
+% Reassign data to new order, random
+mixed_wine_data = wine_data(new_order, :);
+mixed_labels = labels(new_order);
+
+% Use mixed_wine_data and mixed_labels if you want a random selection
 training = vertcat( wine_data(1:39, :), ...
                     wine_data(60:106, :), ...
                     wine_data(131:162, :) );
