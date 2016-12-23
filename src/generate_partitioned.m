@@ -2,6 +2,8 @@ clear
 res_path = get_res_path();
 load(strjoin({res_path 'wine.data.csv'}, filesep));
 
+use_mixed = false;
+
 % Wine data has several rows
 % 0) Class
 % 1) Alcohol
@@ -43,6 +45,11 @@ new_order = [order1 order2 order3];
 % Reassign data to new order, random
 mixed_wine_data = wine_data(new_order, :);
 mixed_labels = labels(new_order);
+
+if use_mixed
+    wine_data = mixed_wine_data;
+    labels = mixed_labels;
+end
 
 % Use mixed_wine_data and mixed_labels if you want a random selection
 training = vertcat( wine_data(1:39, :), ...
