@@ -25,6 +25,9 @@ l2_test = l2_total(139:end, :);
 class1_training = training(1:39, :);
 class2_training = training(40:86, :);
 class3_training = training(87:end, :);
+class1_l2_training = l2_training(1:39, :);
+class2_l2_training = l2_training(40:86, :);
+class3_l2_training = l2_training(87:end, :);
 
 % Means
 mean_training = mean(training);
@@ -32,6 +35,9 @@ mean_l2 = mean(l2_training);
 mean_class1 = mean(class1_training);
 mean_class2 = mean(class2_training);
 mean_class3 = mean(class3_training);
+mean_l2_class1 = mean(class1_l2_training);
+mean_l2_class2 = mean(class2_l2_training);
+mean_l2_class3 = mean(class3_l2_training);
 
 % Mean removed
 % Training is 118, Class 1 39, Class 2 47, Class 3 32
@@ -40,6 +46,9 @@ A_l2 = l2_training - mean_l2(ones(118, 1), :);
 A_class1 = class1_training - mean_class1(ones(39, 1), :);
 A_class2 = class2_training - mean_class2(ones(47, 1), :);
 A_class3 = class3_training - mean_class3(ones(32, 1), :);
+A_l2_class1 = class1_l2_training - mean_l2_class1(ones(39, 1), :);
+A_l2_class2 = class2_l2_training - mean_l2_class2(ones(47, 1), :);
+A_l2_class3 = class3_l2_training - mean_l2_class3(ones(32, 1), :);
 
 % Covariance matrices training
 % S = 1/N A A'
@@ -50,3 +59,6 @@ cov_l2 = (1/118) * (A_l2' * A_l2);
 cov_class1 = (1/39) * (A_class1' * A_class1);
 cov_class2 = (1/47) * (A_class2' * A_class2);
 cov_class3 = (1/32) * (A_class3' * A_class3);
+cov_l2_class1 = (1/39) * (A_l2_class1' * A_l2_class1);
+cov_l2_class2 = (1/47) * (A_l2_class2' * A_l2_class2);
+cov_l2_class3 = (1/32) * (A_l2_class3' * A_l2_class3);
