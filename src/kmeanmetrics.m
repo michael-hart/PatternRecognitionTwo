@@ -1,4 +1,4 @@
-function [ answers ] = kmeanmetrics( training_data, test_data, k )
+function [ answers ] = kmeanmetrics( training_data, test_data, l_training, k )
 % KMEANMETRICS - Performs k means on training data, tests with all metrics
 %   Training data is instance per row, same as test_data.
 %   Performs kmeans and NN cluster with all 4 metrics
