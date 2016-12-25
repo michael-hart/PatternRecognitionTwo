@@ -62,3 +62,8 @@ cov_class3 = (1/32) * (A_class3' * A_class3);
 cov_l2_class1 = (1/39) * (A_l2_class1' * A_l2_class1);
 cov_l2_class2 = (1/47) * (A_l2_class2' * A_l2_class2);
 cov_l2_class3 = (1/32) * (A_l2_class3' * A_l2_class3);
+
+% Save the resulting sets
+save(strjoin({res_path 'covariances.mat'}, filesep), ...
+     'cov_A', 'cov_l2', 'cov_class1', 'cov_class2', 'cov_class3', ...
+     'cov_l2_class1', 'cov_l2_class2', 'cov_l2_class3');
