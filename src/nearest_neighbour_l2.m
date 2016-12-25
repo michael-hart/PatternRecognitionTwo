@@ -9,7 +9,7 @@ function [ lbl ] = nearest_neighbour_l2( test_point, ...
     % Data is in a row
     N = size(training_set, 1);
     difference = training_set(1:N, :) - test_point(ones(1,N), :);
-    l2_distance = sqrt(sum((difference .^ 2), 2));
+    l2_distance = sum((difference .^ 2), 2);
 
     [~, index] = min(l2_distance);
     lbl = training_lbl(index);
