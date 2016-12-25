@@ -75,3 +75,14 @@ correct_l2 = distance_maha_l2 == l_test(:, ones(4, 1));
 correct_percent_l2 = sum(correct_l2)/40 * 100;
 disp('L2 Vectors');
 disp(correct_percent_l2);
+
+
+confusion_plotting(l_test, distance_maha(:, 1), 'unmod_cov_l2', 3);
+confusion_plotting(l_test, distance_maha(:, 2), 'unmod_cov_l2_class1', 3);
+confusion_plotting(l_test, distance_maha(:, 3), 'unmod_cov_l2_class2', 3);
+confusion_plotting(l_test, distance_maha(:, 4), 'unmod_cov_l2_class3', 3);
+
+confusion_plotting(l_test, distance_maha_l2(:, 1), 'mod_cov_l2', 3);
+confusion_plotting(l_test, distance_maha_l2(:, 2), 'mod_cov_l2_class1', 3);
+confusion_plotting(l_test, distance_maha_l2(:, 3), 'mod_cov_l2_class2', 3);
+confusion_plotting(l_test, distance_maha_l2(:, 4), 'mod_cov_l2_class3', 3);
