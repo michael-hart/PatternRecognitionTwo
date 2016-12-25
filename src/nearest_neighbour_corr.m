@@ -8,9 +8,11 @@ function [ lbl ] = nearest_neighbour_corr( test_point, ...
 
     % Data is in a row
     N = size(training_set, 1);
-    product = training_set(1:N, :) .* test_point(ones(1,N), :);
+    norm_training_set = normr(training_set);
+    norm_test_point = normr(test_point);
+    product = norm_training_set(1:N, :) .* norm_test_point(ones(1,N), :);
     crosscorr = sum(product, 2);
 
-    [~, index] = min(crosscorr);
+    [~, index] = max(crosscorr);
     lbl = training_lbl(index);
 end
