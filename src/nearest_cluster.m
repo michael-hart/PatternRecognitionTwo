@@ -10,6 +10,7 @@ function [ label ] = nearest_cluster( classes, centroids, testpoint, distance_ty
     if strcmp(distance_type, 'sqeuclidean')
         distance_type = 'euclidean';
     end
+    
     % Acquire distances
     distances = pdist([testpoint; centroids], deblank(char(distance_type)));
     k = size(centroids, 1);

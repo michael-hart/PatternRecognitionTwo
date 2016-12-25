@@ -6,7 +6,7 @@ load(strjoin({res_path 'covariances.mat'}, filesep));
 
 % 118 training, 20 validation, 40 testing.
 % training, validation, testing
-% All instance per row. Feature per column. 
+% All instance per row. Feature per column.
 % Column normalisation, aka per dimension
 total = [training; validation; test];
 l2_total = normc(total);
@@ -85,3 +85,10 @@ confusion_plotting(l_test, distance_maha_l2(:, 1), '../pic/mod_cov_l2', 3);
 confusion_plotting(l_test, distance_maha_l2(:, 2), '../pic/mod_cov_l2_class1', 3);
 confusion_plotting(l_test, distance_maha_l2(:, 3), '../pic/mod_cov_l2_class2', 3);
 confusion_plotting(l_test, distance_maha_l2(:, 4), '../pic/mod_cov_l2_class3', 3);
+
+% Save the features sets
+save(strjoin({res_path 'q1Db.mat'}, filesep), ...
+     'g_training', 'g_class1_training', 'g_class2_training', 'g_class3_training', ...
+     'g_test', 'g_class1_test', 'g_class2_test', 'g_class3_test', ...
+     'g_l2_training', 'g_l2_class1_training', 'g_l2_class2_training', 'g_l2_class3_training', ...
+     'g_l2_test', 'g_l2_class1_test', 'g_l2_class2_test', 'g_l2_class3_test');
