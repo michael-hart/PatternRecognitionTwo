@@ -47,14 +47,14 @@ correct_percent_l2 = sum(correct_l2)/40 * 100;
 disp('L2 Vectors');
 disp(correct_percent_l2);
 
-confusion_plotting(l_test, distances(:, 1), 'unmod_l1', 3);
-confusion_plotting(l_test, distances(:, 2), 'unmod_l2', 3);
-confusion_plotting(l_test, distances(:, 3), 'unmod_chi', 3);
-confusion_plotting(l_test, distances(:, 4), 'unmod_corr', 3);
-confusion_plotting(l_test, distances(:, 5), 'unmod_inter', 3);
+confusion_plotting(l_test, distances(:, 1), '../pic/unmod_l1', 3);
+confusion_plotting(l_test, distances(:, 2), '../pic/unmod_l2', 3);
+confusion_plotting(l_test, distances(:, 3), '../pic/unmod_chi', 3);
+confusion_plotting(l_test, distances(:, 4), '../pic/unmod_corr', 3);
+confusion_plotting(l_test, distances(:, 5), '../pic/unmod_inter', 3);
 
-confusion_plotting(l_test, distances_l2(:, 1), 'mod_l1', 3);
-confusion_plotting(l_test, distances_l2(:, 2), 'mod_l2', 3);
-confusion_plotting(l_test, distances_l2(:, 3), 'mod_chi', 3);
-confusion_plotting(l_test, distances_l2(:, 4), 'mod_corr', 3);
-confusion_plotting(l_test, distances_l2(:, 5), 'mod_inter', 3);
+confusion_plotting(l_test, distances_l2(:, 1), '../pic/mod_l1', 3);
+confusion_plotting(l_test, distances_l2(:, 2), '../pic/mod_l2', 3);
+confusion_plotting(l_test, distances_l2(:, 3), '../pic/mod_chi', 3);
+confusion_plotting(l_test, distances_l2(:, 4), '../pic/mod_corr', 3);
+confusion_plotting(l_test, distances_l2(:, 5), '../pic/mod_inter', 3);
