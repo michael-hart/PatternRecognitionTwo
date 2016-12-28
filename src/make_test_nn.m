@@ -13,36 +13,45 @@ function [ acc, t_train, t_test ] = make_test_nn( training, ...
 %   Function returns acc as the test accuracy, t_train as time to train,
 %   and t_test as time to test
 
-% Set the inputs as concatenation of data, and targets as concatenation of
-% classes
-inputs = vertcat(training, validation, test)';
-targets = vertcat(l_training, l_validation, l_test)';
-
-% TODO use training algorithm, as it uses default of trainlm EVERY TIME
+inputs = training';
+targets = l_training';
 
 % Create a Fitting Network
-hiddenLayerSize = n_hidden;
-net = fitnet(hiddenLayerSize);
+% Possible training algorithms are as follows:
+% 'trainlm', 'trainbr', 'trainbfg', 'trainrp', 'trainscg', 'traincgb', 
+% 'traincgf', 'traincgp', 'trainoss', 'traingdx', 'traingdm', 'traingd'
+% Can't find a way to change number of layers without modifying the net
+% object directly
+net = fitnet(n_hidden, train_alg);
+
+% Disable the god damn UI window
+net.trainParam.showWindow=0;
 
 % Set up Division of Data for Training, Validation, Testing
-net.divideParam.trainRatio = 70/100;
-net.divideParam.valRatio = 15/100;
-net.divideParam.testRatio = 15/100;
- 
+net.divideParam.trainRatio = 100/100;
+net.divideParam.valRatio = 0/100;
+net.divideParam.testRatio = 0/100;
+
+% TODO Set up number of layers to use
+
 % Train the Network
 tic();
-[net,tr] = train(net,inputs,targets);
+net = train(net,inputs,targets);
 t_train = toc();
 
-% Test the Network
-tic();
-outputs = net(inputs);
-t_test = toc();
-errors = gsubtract(outputs,targets);
-performance = perform(net,targets,outputs);
+% There is a standard test of network, but it partitions the data itself;
+% hence, this isn't suitable. Our own test method follows.
+test_inputs = vertcat(validation, test)';
+targets = vertcat(l_validation, l_test)';
 
-% TODO assign an accuracy - some value from performance, perhaps?
-acc = 1;
+% Run test/validation data through network
+tic();
+outputs = net(test_inputs);
+t_test = toc();
+
+% Compare targets to outputs
+correct = round(outputs) == targets;
+acc = sum(correct) / length(targets);
 
 end
 
