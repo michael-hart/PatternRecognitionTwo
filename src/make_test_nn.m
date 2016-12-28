@@ -13,8 +13,14 @@ function [ acc, t_train, t_test ] = make_test_nn( training, ...
 %   Function returns acc as the test accuracy, t_train as time to train,
 %   and t_test as time to test
 
-inputs = training';
-targets = l_training';
+% Validation is part of the training set; concatenate the sets and set up
+% the ratios
+
+inputs = vertcat(training, validation)';
+targets = vertcat(l_training, l_validation)';
+Na = length(training);
+Nb = length(validation);
+N = (Na/(Na+Nb)) * 100;
 
 % Create a Fitting Network
 % Possible training algorithms are as follows:
@@ -28,8 +34,8 @@ net = fitnet(n_hidden, train_alg);
 net.trainParam.showWindow=0;
 
 % Set up Division of Data for Training, Validation, Testing
-net.divideParam.trainRatio = 100/100;
-net.divideParam.valRatio = 0/100;
+net.divideParam.trainRatio = N/100;
+net.divideParam.valRatio = (100-N)/100;
 net.divideParam.testRatio = 0/100;
 
 % TODO Set up number of layers to use
@@ -41,8 +47,8 @@ t_train = toc();
 
 % There is a standard test of network, but it partitions the data itself;
 % hence, this isn't suitable. Our own test method follows.
-test_inputs = vertcat(validation, test)';
-targets = vertcat(l_validation, l_test)';
+test_inputs = test';
+targets = l_test';
 
 % Run test/validation data through network
 tic();
