@@ -30,7 +30,7 @@ N = (Na/(Na+Nb));
 % object directly
 net = fitnet(n_hidden, train_alg);
 
-% Disable the god damn UI window
+% Disable the UI window
 net.trainParam.showWindow=0;
 
 % Set divide function to contiguous
