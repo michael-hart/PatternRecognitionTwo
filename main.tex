@@ -1,5 +1,140 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
+%-------------------------------------------------------------------------------
+% Document & Package declarations
+%-------------------------------------------------------------------------------
+
+\documentclass[a4paper, 10pt, conference]{ieeeconf}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+\usepackage{tabularx}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage[font=footnotesize,labelfont=bf]{subcaption}
+
+%% Packages for displaying source code
+\usepackage{listings}
+% \usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\usepackage{float}
+\usepackage{longtable}
+
+%% Packages for displaying source code
+\usepackage[numbered,framed]{matlab-prettifier}
+\usepackage{color}
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE!
+%% User assumes all risk.
+%% In no event shall IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
+%%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex,
+%%                    bare_jrnl_transmag.tex
+%%*************************************************************************
+
+%-------------------------------------------------------------------------------
+% Document Configuration
+%-------------------------------------------------------------------------------
+
 \begin{document}
-(Type your content here.)
+\title{Pattern Recognition - Distance Metrics and Neural Networks}
+\author{Michael~Hart and
+        Meng~Kiang~Seah
+\\
+        Department of Electrical and Electronic Engineering, 
+        Imperial College London, 
+        SW7 2AZ
+\\        
+        E-mail: \{mh1613, mks211\}@imperial.ac.uk}
+\date{\today}
+
+%-------------------------------------------------------------------------------
+% Plan on what to write
+%-------------------------------------------------------------------------------
+
+% See coursework instructions at: 
+% https://bb.imperial.ac.uk/bbcswebdav/pid-1009576-dt-content-rid-3417906_1/courses/DSS-EE4_68-16_17/PRCoursework2.pdf
+
+%-------------------------------------------------------------------------------
+% Information Banner
+%-------------------------------------------------------------------------------
+
+\maketitle
+
+%-------------------------------------------------------------------------------
+% Abstract
+%-------------------------------------------------------------------------------
+
+\begin{abstract}
+TODO ABSTRACT
+\end{abstract}
+
+%-------------------------------------------------------------------------------
+% Introduction
+%-------------------------------------------------------------------------------
+\section{Introduction}
+
+An introduction
+
+%-------------------------------------------------------------------------------
+% Distance Metrics
+%-------------------------------------------------------------------------------
+\section{Distance Metrics}
+
+%-------------------------------------------------------------------------------
+% K-means clustering
+%-------------------------------------------------------------------------------
+\section{K-means clustering}
+
+%-------------------------------------------------------------------------------
+% Neural Network
+%-------------------------------------------------------------------------------
+\section{Neural Network}
+
+% Using Matlab Neural Network toolbox create a network, train and test with the wine data. Vary the parameters of the network to minimize the classification error. Report the observations and compare to the results from Q1 and Q2. Generate another random split of train/test/validation data and repeat the experiment. 
+
+% We've modified to use ALL the training algorithms and attempted to use a good range of hidden neurons
+% Next is to generate some interesting graphs of training algorithm accuracies, errors etc
+% Can also show how matlab does the generation, validation, and shows the performance
+% Discuss the data partition, the different training algorithms, how the code is done
+
+%-------------------------------------------------------------------------------
+% Conclusion
+%-------------------------------------------------------------------------------
+\section{Conclusion}
+
+A conclusion \cite{pca}. 
+
+%-------------------------------------------------------------------------------
+% References
+%-------------------------------------------------------------------------------
+\bibliographystyle{unsrt}
+\bibliography{pr_refs}
+
 \end{document}
