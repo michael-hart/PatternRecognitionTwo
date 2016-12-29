@@ -133,13 +133,94 @@ To fully test the effectiveness of a neural network, the data was partitioned us
 
 For each combination of training algorithm and number of hidden neurons, the network's classification accuracy was determined, along with its classification error as both the sum of squared errors and the mean squared error. The metric used to determine the minimum error is the mean squared error.
 
-For each training algorithm, the two training algorithms with the minimum mean squared error (MSE) were determined; the results are shown in Figure TODO.
+The two training algorithms with the minimum mean squared error (MSE) were determined; the results are shown in Figure \ref{fig:unmixed_full}. The effects of overfitting are clearly shown by the huge spike in both algorithms after around 100 hidden neurons. The comparison between the two algorithms is more clearly seen in Figure \ref{fig:unmixed_limited}, which limits the x-axis to 100 hidden neurons.
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{pic/unmixed_best_fullrange.png}
+    \caption{MSE of best performing algorithms}
+    \label{fig:unmixed_full}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{pic/unmixed_best_limited.png}
+    \caption{MSE of best performing algorithms with limited axis}
+    \label{fig:unmixed_limited}
+\end{figure}
+
+% Should I add a bar chart or something of all training algorithms with their MMSE between 1-100 neurons?
+
+% TODO some discussion of the results. Why is it darting up and down so much? Can you see a down-curve of underfitting, then an up-curve of overfitting? What's the OPTIMAL number of neurons to use? (25) What's the best algorithm overall? Why?
+
+% TODO show a table of data around the point of interest, 25 neurons. 10-40 for each, perhaps? trainbfh, traincgp
+
+\begin{table}
+\centering
+\caption{Raw data of best performing algorithms}
+\label{tbl:unmixed}
+\begin{tabular}{llllll}
+\hline
+\textbf{Algorithm} & \textbf{Neurons} & \textbf{Time to Train (s)} & \textbf{Accuracy} & \textbf{MSE} \\ \hline
+trainbfg & 15 & 0.15658 & 0.9 & 0.10695 \\ \hline 
+trainbfg & 20 & 0.23614 & 0.8 & 0.13496 \\ \hline 
+trainbfg & 25 & 0.82571 & 0.95 & 0.054725 \\ \hline 
+trainbfg & 30 & 0.76897 & 0.95 & 0.069127 \\ \hline 
+trainbfg & 35 & 0.70948 & 0.85 & 0.10906 \\ \hline
+
+traincgp & 15 & 0.066146 & 0.825 & 0.16928 \\ \hline 
+traincgp & 20 & 0.09904 & 0.875 & 0.12706 \\ \hline 
+traincgp & 25 & 0.10311 & 0.95 & 0.05694 \\ \hline 
+traincgp & 30 & 0.075015 & 0.85 & 0.19212 \\ \hline 
+traincgp & 35 & 0.11164 & 0.85 & 0.13576 \\ \hline 
+\end{tabular}
+\end{table}
+
+The experiment was then repeated after randomly shuffling the data and partitioning again. The results for this changes on every test set due to the random element. The results are shown in Figures \ref{fig:mixed_full} and \ref{fig:mixed_limited}, as with the standard partition data.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{pic/mixed_best_fullrange.png}
+    \caption{MSE of best performing algorithms with random partition}
+    \label{fig:mixed_full}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{pic/mixed_best_limited.png}
+    \caption{MSE of best performing algorithms with limited axis with random partition}
+    \label{fig:mixed_limited}
+\end{figure}
+
+\begin{table}
+\centering
+\caption{Raw data of best performing algorithms in random partition}
+\label{tbl:mixed}
+\begin{tabular}{llllll}
+\hline
+\textbf{Algorithm} & \textbf{Neurons} & \textbf{Time to Train (s)} & \textbf{Accuracy} & \textbf{MSE} \\ \hline
+trainbr & 15 & 5.8827 & 0.975 & 0.028823 \\ \hline 
+trainbr & 20 & 8.1333 & 0.975 & 0.020667 \\ \hline 
+trainbr & 25 & 14.6828 & 1 & 0.015294 \\ \hline 
+trainbr & 30 & 20.2646 & 0.975 & 0.021972 \\ \hline 
+trainbr & 35 & 28.5412 & 1 & 0.016915 \\ \hline 
+
+trainlm & 15 & 0.0657085 & 0.95 & 0.036084 \\ \hline 
+trainlm & 20 & 0.0607793 & 1 & 0.015435 \\ \hline 
+trainlm & 25 & 0.0679456 & 1 & 0.019838 \\ \hline 
+trainlm & 30 & 0.0846978 & 0.85 & 0.10142 \\ \hline 
+trainlm & 35 & 0.0921787 & 0.975 & 0.065321 \\ \hline 
+\end{tabular}
+\end{table}
+
+% TODO a similar discussion of results to before. Add in a comparison to unmixed; why is it different? 
 
 % We've modified to use ALL the training algorithms and attempted to use a good range of hidden neurons
 % Next is to generate some interesting graphs of training algorithm accuracies, errors etc
 % Can also show how matlab does the generation, validation, and shows the performance
 % Discuss the data partition, the different training algorithms, how the code is done, how all the results are taken, then discuss the results themselves
+
+% TODO Table data needs discussing, including where the test time is
 
 % Compare the results to other sections
 
