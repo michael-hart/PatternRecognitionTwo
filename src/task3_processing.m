@@ -45,6 +45,13 @@ mix_gd = zeros(31, 6);  count_mgd = 1;
 % Dictate which variable to sort on
 sort_by_var = 6;
 
+% Set up the path to the pic folder
+current_path = mfilename('fullpath');
+split_path = strsplit(current_path, filesep);
+root_path = split_path(1:end-2)';
+pic_path = cat(1, root_path, 'pic');
+pic_path = strjoin(pic_path, filesep);
+
 %% Partitioning
 
 % Partition data into separate variables
@@ -242,11 +249,19 @@ plot(unmix_best_alg(:, 1), unmix_best_alg(:, sort_by_var));
 plot(unmix_second_alg(:, 1), unmix_second_alg(:, sort_by_var));
 
 legend('show');
-legend(training_algs(X));
+legend(training_algs(best));
 
 ax = gca;
 ax.XGrid = 'on';
 ax.YGrid = 'on';
+ax.XMinorGrid = 'on';
+ax.YMinorGrid = 'on';
+
+print(strjoin({pic_path 'unmixed_best_fullrange'}, filesep), '-dpng');
+
+% Set X limit to 100 to get interesting range
+ax.XLim = [0 100];
+print(strjoin({pic_path 'unmixed_best_limited'}, filesep), '-dpng');
 
 %% Plot Mixed
 
@@ -265,8 +280,16 @@ plot(mix_best_alg(:, 1), mix_best_alg(:, sort_by_var));
 plot(mix_second_alg(:, 1), mix_second_alg(:, sort_by_var));
 
 legend('show');
-legend(training_algs(X));
+legend(training_algs(best));
 
 ax = gca;
 ax.XGrid = 'on';
 ax.YGrid = 'on';
+ax.XMinorGrid = 'on';
+ax.YMinorGrid = 'on';
+
+print(strjoin({pic_path 'mixed_best_fullrange'}, filesep), '-dpng');
+
+% Set X limit to 100 to get interesting range
+ax.XLim = [0 100];
+print(strjoin({pic_path 'mixed_best_limited'}, filesep), '-dpng');
