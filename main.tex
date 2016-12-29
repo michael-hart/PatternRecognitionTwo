@@ -16,8 +16,8 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-\usepackage[font=footnotesize,labelfont=bf]{caption}
-\usepackage[font=footnotesize,labelfont=bf]{subcaption}
+% \usepackage[font=footnotesize,labelfont=bf]{caption}
+% \usepackage[font=footnotesize,labelfont=bf]{subcaption}
 
 %% Packages for displaying source code
 \usepackage{listings}
@@ -64,8 +64,8 @@
 
 \begin{document}
 \title{Pattern Recognition - Distance Metrics and Neural Networks}
-\author{Michael~Hart and
-        Meng~Kiang~Seah
+\author{Michael~Hart (00818445) and
+        Meng~Kiang~Seah (TODO)
 \\
         Department of Electrical and Electronic Engineering, 
         Imperial College London, 
@@ -119,10 +119,26 @@ An introduction
 
 % Using Matlab Neural Network toolbox create a network, train and test with the wine data. Vary the parameters of the network to minimize the classification error. Report the observations and compare to the results from Q1 and Q2. Generate another random split of train/test/validation data and repeat the experiment. 
 
+% WEAK placeholder sentence. TODO rewrite.
+Another way to do pattern recognition is to use a neural network.
+\todo{Rewrite this weak-ass sentence}
+
+Neural networks take inspiration from biological neurons, which are interconnected and transmit information using sudden spikes in chemical levels. This is a process that can be simulated in software, including using MATLAB's neural network toolbox; the user can specify the number of layers of neurons, the number of hidden neurons, and a training method.
+
+The simulated network is made up of an input layer, which is the same size as the input data, which is 13 in the case of the wine data. The input layer is fully interconnected with a hidden layer of size specified by the user, which can be connected to any number of other hidden layers; finally, it uses an output layer to provide an output. The hidden neurons are a matrix of weights multiplied by the output of the previous layer, plus a matrix of biases. 
+
+The weights are randomly initialised. The network is then trained, whereby the training data is fed through the network and the weights are adjusted to provide a more accurate output. The exact manner of this adjustment is determined by the training algorithm. Validation data, which is separate to training data, is used to determine when the network is fully trained.
+
+To fully test the effectiveness of a neural network, the data was partitioned using a set split of  70\% training, 15\% validation, and 15\% test data, as in previous tasks. New networks were constructed for each of twelve possible training algorithms offered by the neural network toolbox, with a wide range of hidden neurons possible. These are given in \ref{sec:appendix}.
+
+For each combination of training algorithm and number of hidden neurons, the network's classification accuracy was determined, along with its classification error as both the sum of squared errors and the mean squared error. The metric used to determine the minimum error is the mean squared error.
+
 % We've modified to use ALL the training algorithms and attempted to use a good range of hidden neurons
 % Next is to generate some interesting graphs of training algorithm accuracies, errors etc
 % Can also show how matlab does the generation, validation, and shows the performance
-% Discuss the data partition, the different training algorithms, how the code is done
+% Discuss the data partition, the different training algorithms, how the code is done, how all the results are taken, then discuss the results themselves
+
+% Compare the results to other sections
 
 %-------------------------------------------------------------------------------
 % Conclusion
@@ -141,14 +157,14 @@ A conclusion \cite{pca}.
 % Appendix(ces)
 %-------------------------------------------------------------------------------
 \onecolumn
-\section{Appendix}
+\section{Appendix} \label{sec:appendix}
 
 \subsection*{Test set code for Task 3}
 \lstinputlisting[style=Matlab-editor]{src/task3_all.m}
 \newpage
 
 \subsection*{Making and testing of neural network}
-\lstinputlisting[style=Matlab-editor]{src/task3_all.m}
+\lstinputlisting[style=Matlab-editor]{src/make_test_nn.m}
 \newpage
 
 \end{document}
