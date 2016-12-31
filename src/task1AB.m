@@ -13,11 +13,6 @@ l2_training = l2_total(1:118, :);
 l2_validation = l2_total(119:138, :);
 l2_test = l2_total(139:end, :);
 
-% Row normalisation, aka per instance
-% l2_training = normr(training);
-% l2_validation = normr(validation);
-% l2_test = normr(test);
-
 % Acquire per class training
 % Class 1 split into: 39 - 7 - 13
 % Class 2 split into: 47 - 8 - 16
@@ -39,31 +34,23 @@ mean_l2_class1 = mean(class1_l2_training);
 mean_l2_class2 = mean(class2_l2_training);
 mean_l2_class3 = mean(class3_l2_training);
 
-% Mean removed
-% Training is 118, Class 1 39, Class 2 47, Class 3 32
-A = training - mean_training(ones(118, 1), :);
-A_l2 = l2_training - mean_l2(ones(118, 1), :);
-A_class1 = class1_training - mean_class1(ones(39, 1), :);
-A_class2 = class2_training - mean_class2(ones(47, 1), :);
-A_class3 = class3_training - mean_class3(ones(32, 1), :);
-A_l2_class1 = class1_l2_training - mean_l2_class1(ones(39, 1), :);
-A_l2_class2 = class2_l2_training - mean_l2_class2(ones(47, 1), :);
-A_l2_class3 = class3_l2_training - mean_l2_class3(ones(32, 1), :);
+% Calculate covariance matrices. 
+cov_training = cov(training);
+cov_l2 = cov(l2_training);
+cov_class1 = cov(class1_training);
+cov_class2 = cov(class2_training);
+cov_class3 = cov(class3_training);
+cov_l2_class1 = cov(class1_l2_training);
+cov_l2_class2 = cov(class2_l2_training);
+cov_l2_class3 = cov(class3_l2_training);
 
-% Covariance matrices training
-% S = 1/N A A'
-% But matrix is currently instance per row, aka transposed already
-% Hence, 1/N A' A.  
-cov_A = (1/118) * (A' * A);
-cov_l2 = (1/118) * (A_l2' * A_l2);
-cov_class1 = (1/39) * (A_class1' * A_class1);
-cov_class2 = (1/47) * (A_class2' * A_class2);
-cov_class3 = (1/32) * (A_class3' * A_class3);
-cov_l2_class1 = (1/39) * (A_l2_class1' * A_l2_class1);
-cov_l2_class2 = (1/47) * (A_l2_class2' * A_l2_class2);
-cov_l2_class3 = (1/32) * (A_l2_class3' * A_l2_class3);
 
 % Save the resulting sets
 save(strjoin({res_path 'covariances.mat'}, filesep), ...
-     'cov_A', 'cov_l2', 'cov_class1', 'cov_class2', 'cov_class3', ...
+     'cov_training', 'cov_l2', 'cov_class1', 'cov_class2', 'cov_class3', ...
      'cov_l2_class1', 'cov_l2_class2', 'cov_l2_class3');
+ 
+% Save the resulting sets
+save(strjoin({res_path 'means.mat'}, filesep), ...
+     'mean_training', 'mean_l2', 'mean_class1', 'mean_class2', 'mean_class3', ...
+     'mean_l2_class1', 'mean_l2_class2', 'mean_l2_class3');

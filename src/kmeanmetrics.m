@@ -22,7 +22,7 @@ function [ answers ] = kmeanmetrics( training_data, test_data, l_training, k )
         % For each cluster
         for clus = 1:k
             % Indices for that cluster.
-            indices = find(idx(:, metric_index) == clus);
+            indices = idx(:, metric_index) == clus;
             % Most common class label in those indices.
             assignment(clus) = mode(l_training(indices));
         end
