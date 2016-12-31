@@ -5,6 +5,8 @@ function [ acc, t_train, t_test, err ] = make_test_nn( training, ...
                                                        validation, ...
                                                        l_validation, ...
                                                        n_hidden, ...
+                                                       n_layers, ...
+                                                       net_type, ...
                                                        train_alg)
 %MAKE_TEST_NN Generate, train, and test neural network with params
 %   First six parameters are training, test, and validation data and labels
@@ -26,9 +28,26 @@ N = (Na/(Na+Nb));
 % Possible training algorithms are as follows:
 % 'trainlm', 'trainbr', 'trainbfg', 'trainrp', 'trainscg', 'traincgb', 
 % 'traincgf', 'traincgp', 'trainoss', 'traingdx', 'traingdm', 'traingd'
-% Can't find a way to change number of layers without modifying the net
-% object directly
-net = fitnet(n_hidden, train_alg);
+
+% Create an array for the hidden layers
+layers = zeros(1, n_layers);
+for i=1:n_layers
+    layers(i) = n_hidden;
+end
+
+if strcmpi(net_type, 'fitnet')
+    net = fitnet(layers, train_alg);
+elseif strcmpi(net_type, 'feedforwardnet')
+    net = feedforwardnet(layers, train_alg);
+elseif strcmpi(net_type, 'cascadeforwardnet')
+    net = cascadeforwardnet(layers, train_alg);
+elseif strcmpi(net_type, 'patternnet')
+    net = patternnet(layers, train_alg);
+else
+    disp('Network type not recognised')
+    return
+end
+net.performFcn = 'mse';
 
 % Disable the UI window
 net.trainParam.showWindow=0;
@@ -41,9 +60,8 @@ net.divideParam.trainRatio = N;
 net.divideParam.valRatio = 1-N;
 net.divideParam.testRatio = 0;
 
-% TODO Set up number of layers to use
-
 % Train the Network
+net = configure(net,inputs,targets);
 tic();
 net = train(net,inputs,targets);
 t_train = toc();
