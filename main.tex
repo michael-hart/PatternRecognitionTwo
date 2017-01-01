@@ -65,7 +65,7 @@
 \begin{document}
 \title{Pattern Recognition - Distance Metrics and Neural Networks}
 \author{Michael~Hart (00818445) and
-        Meng~Kiang~Seah (TODO)
+        Meng~Kiang~Seah (00699092)
 \\
         Department of Electrical and Electronic Engineering, 
         Imperial College London, 
@@ -119,18 +119,11 @@ An introduction
 
 % Using Matlab Neural Network toolbox create a network, train and test with the wine data. Vary the parameters of the network to minimize the classification error. Report the observations and compare to the results from Q1 and Q2. Generate another random split of train/test/validation data and repeat the experiment. 
 
-% WEAK placeholder sentence. TODO rewrite.
-Another way to do pattern recognition is to use a neural network.
+Neural networks are an often-used method of pattern recognition, due to their high accuracy, low error rates, and ease of use. They are flexible, and so can be adapted to most pattern recognition problems, such as the use of Convolutional Neural Networks (CNNs) in image recognition, an industry standard.
 
-Neural networks take inspiration from biological neurons, which are interconnected and transmit information using sudden spikes in chemical levels. This is a process that can be simulated in software, including using MATLAB's neural network toolbox; the user can specify the number of layers of neurons, the number of hidden neurons, and a training method.
+Neural networks take inspiration from biological neurons, which are interconnected and transmit information using sudden spikes in chemical levels. This is a process that can be simulated in software, including using MATLAB's neural network toolbox (NNT); this toolbox allows the creation, training and testing of various types of neural network.
 
-The simulated network is made up of an input layer, which is the same size as the input data, which is 13 in the case of the wine data. The input layer is fully interconnected with a hidden layer of size specified by the user, which can be connected to any number of other hidden layers; finally, it uses an output layer to provide an output. The hidden neurons are a matrix of weights multiplied by the output of the previous layer, plus a matrix of biases. 
-
-The weights are randomly initialised. The network is then trained, whereby the training data is fed through the network and the weights are adjusted to provide a more accurate output. The exact manner of this adjustment is determined by the training algorithm. Validation data, which is separate to training data, is used to determine when the network is fully trained.
-
-To fully test the effectiveness of a neural network, the data was partitioned using a set split of  70\% training, 15\% validation, and 15\% test data, as in previous tasks. New networks were constructed for each of twelve possible training algorithms offered by the neural network toolbox, with a wide range of hidden neurons possible. These are given in \ref{sec:appendix}.
-
-For each combination of training algorithm and number of hidden neurons, the network's classification accuracy was determined, along with its classification error as both the sum of squared errors and the mean squared error. The metric used to determine the minimum error is the mean squared error.
+This section tests the use of neural networks to minimise the Mean Squared Error (MSE), as a measure of the performance of the network. First the number of hidden neurons in a single layer fitting network is varied to test performance; results for a standard partition are shown in Table \ref{tbl:unmixed}. The fitting network was used as one of the most flexible types offered by the NNT, and most networks perform with near-optimal results using only a single hidden layer. The code used to generate these results is shown in the Appendix.
 
 The two training algorithms with the minimum mean squared error (MSE) were determined; the results are shown in Figure \ref{fig:unmixed_full}. The effects of overfitting are clearly shown by the huge spike in both algorithms after around 100 hidden neurons. The comparison between the two algorithms is more clearly seen in Figure \ref{fig:unmixed_limited}, which limits the x-axis to 100 hidden neurons.
 
@@ -148,15 +141,15 @@ The two training algorithms with the minimum mean squared error (MSE) were deter
     \label{fig:unmixed_limited}
 \end{figure}
 
-% Should I add a bar chart or something of all training algorithms with their MMSE between 1-100 neurons?
+The graphs in the figures show a large variation in MSE between the lower numbers of hidden neurons, but overall there is a downward trend towards the apparent optimum of 25 hidden neurons, which indicates underfitting. After the lowest point, there is an upward trend, which indicates overfitting. Thus, the optimal number of nodes to use is likely between 10 and 50. The best performing algorithm from this data set is the \textit{trainbfg} algorithm.
 
-% TODO some discussion of the results. Why is it darting up and down so much? Can you see a down-curve of underfitting, then an up-curve of overfitting? What's the OPTIMAL number of neurons to use? (25) What's the best algorithm overall? Why?
+However, although the standard partition provides an even comparison with other tasks, it does not provide the optimal method of training a network, which is to use a random partition. Therefore, the data in Table \ref{tbl:mixed} show the results of repartitioning with the same ratios, but in a random order. The graph is shown in Figure \ref{fig:mixed_limited}, already limited to 100 neurons due to the same overfitting effect as with the standard partition data.
 
-% TODO show a table of data around the point of interest, 25 neurons. 10-40 for each, perhaps? trainbfh, traincgp
+With randomly partitioned data, the most effective training algorithm is \textit{trainlm} with 15 hidden neurons, but the graph shows that overall \textit{trainbr} is a more effective algorithm, even reducing the effects of overfitting. This is in contrast to the standard partition, which shows other algorithms to be more effective, but more surprisingly the random data shows a lower MSE overall. This implies that using random partitioning is a more effective method of training a neural network than a fixed or contiguous partitioning method; this is further backed up by the first 100\% classification accuracy results. The random partitioning data also shows that the optimum number of hidden neurons to use is between 10 and 50 neurons.
 
 \begin{table}
 \centering
-\caption{Raw data of best performing algorithms}
+\caption{Standard Partition - Hidden Neurons Comparison}
 \label{tbl:unmixed}
 \begin{tabular}{llllll}
 \hline
@@ -175,15 +168,6 @@ traincgp & 35 & 0.11164 & 0.85 & 0.13576 \\ \hline
 \end{tabular}
 \end{table}
 
-The experiment was then repeated after randomly shuffling the data and partitioning again. The results for this changes on every test set due to the random element. The results are shown in Figures \ref{fig:mixed_full} and \ref{fig:mixed_limited}, as with the standard partition data.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\linewidth]{pic/mixed_best_fullrange.png}
-    \caption{MSE of best performing algorithms with random partition}
-    \label{fig:mixed_full}
-\end{figure}
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\linewidth]{pic/mixed_best_limited.png}
@@ -193,7 +177,7 @@ The experiment was then repeated after randomly shuffling the data and partition
 
 \begin{table}
 \centering
-\caption{Raw data of best performing algorithms in random partition}
+\caption{Random Partition - Hidden Neurons Comparison}
 \label{tbl:mixed}
 \begin{tabular}{llllll}
 \hline
@@ -212,18 +196,46 @@ trainlm & 35 & 0.0921787 & 0.975 & 0.065321 \\ \hline
 \end{tabular}
 \end{table}
 
-% TODO a similar discussion of results to before. Add in a comparison to unmixed; why is it different? 
+% TODO Decide whether to visualise matlab's performance stuff. Should just be in pic folder, but where does it fit?
 
-% We've modified to use ALL the training algorithms and attempted to use a good range of hidden neurons
-% Next is to generate some interesting graphs of training algorithm accuracies, errors etc
-% Can also show how matlab does the generation, validation, and shows the performance
-% Discuss the data partition, the different training algorithms, how the code is done, how all the results are taken, then discuss the results themselves
+The examination of neural networks thus far has shown that the most effective number of neurons for a single layer fitting network is in the range of 10-50 approximately. To further minimise the MSE in neural networks, multiple types of network were investigated, simultaneously with the number of layers per network. The code for this may be found in the Appendix; the results with minimum MSE are shown in Tables \ref{tbl:unmixed_networks} and \ref{tbl:mixed_networks}, representing standard and random partition results respectively.
 
-% TODO Table data needs discussing, including where the test time is
+% Tables of interesting data from network and layers comparison
+\begin{table}
+\centering
+\caption{Standard Partition - Network and Layer Comparison}
+\label{tbl:unmixed_networks}
+\begin{tabular}{llllll}
+\hline
+\textbf{Network} & \textbf{Algorithm} & \textbf{Layers} & \textbf{Neurons} & \textbf{$T_{train}$} & \textbf{MSE} \\ \hline
+pattern & trancgf & 3 & 20 & 0.086992 & 0.034907 \\ \hline
+pattern & trainscg & 3 & 20 & 0.065218 & 0.040891 \\ \hline
+pattern & trainlm & 2 & 10 & 0.083229 & 0.042546 \\ \hline
+pattern & traincgp & 1 & 40 & 0.053625 & 0.0484 \\ \hline
+fit & trainbfg & 2 & 30 & 38.0862 & 0.050361 \\ \hline
+\end{tabular}
+\end{table}
 
-% TODO following on from discussion of 
+\begin{table}
+\centering
+\caption{Random Partition - Network and Layer Comparison}
+\label{tbl:mixed_networks}
+\begin{tabular}{llllll}
+\hline
+\textbf{Network} & \textbf{Algorithm} & \textbf{Layers} & \textbf{Neurons} & \textbf{$T_{train}$} & \textbf{MSE} \\ \hline
+fit & trainbr & 2 & 10 & 6.7953 & 0.01676 \\ \hline
+fit & trainbr & 1 & 10 & 0.9048 & 0.01691 \\ \hline
+pattern & trainlm & 3 & 25 & 4.2124 & 0.01707 \\ \hline
+pattern & trainscg & 3 & 15 & 0.0668& 0.01846 \\ \hline
+feedforward & traincgp & 3 & 15 & 0.1105 & 0.01892 \\ \hline
+\end{tabular}
+\end{table}
 
-% Compare the results to other sections
+The standard partition shows that a different type of network has proved most effective. \textit{Patternnet} is the network that is intended for use in pattern recognition applications, such as this one. However, the MSE of standard partition is still greater than that attained by randomly partitioned data, which uses a fitting network with \textit{trainbr} algorithm as the most effective method, matching very closely with the results of the previous data set. In fact, the previous set of data showed a lower MSE using \textit{trainbr} with a single layer of 25 neurons, which was not investigated in the latter data set due to the large amount of training time required. 
+
+Overall, the data shown in this section suggests that the most effective method of minimising error from a neural network is to randomly partition the data, and use a fitting network of a single layer of 25 neurons with the \textit{trainbr} training algorithm. It is possible that more layers of 25 neurons would increase accuracy, but at the cost of training and test time with a minimal decrease in MSE.
+
+% TODO compare MSE and accuracy with other tasks
 
 %-------------------------------------------------------------------------------
 % Conclusion
@@ -250,6 +262,10 @@ A conclusion \cite{pca}.
 
 \subsection*{Making and testing of neural network}
 \lstinputlisting[style=Matlab-editor]{src/make_test_nn.m}
+\newpage
+
+\subsection*{Test code for various layers/networks for Task 3}
+\lstinputlisting[style=Matlab-editor]{src/task3_networks.m}
 \newpage
 
 \end{document}
