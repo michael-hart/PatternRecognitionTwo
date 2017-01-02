@@ -16,8 +16,8 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-% \usepackage[font=footnotesize,labelfont=bf]{caption}
-% \usepackage[font=footnotesize,labelfont=bf]{subcaption}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage[font=footnotesize,labelfont=bf]{subcaption}
 
 %% Packages for displaying source code
 \usepackage{listings}
@@ -67,10 +67,10 @@
 \author{Michael~Hart (00818445) and
         Meng~Kiang~Seah (00699092)
 \\
-        Department of Electrical and Electronic Engineering, 
-        Imperial College London, 
+        Department of Electrical and Electronic Engineering,
+        Imperial College London,
         SW7 2AZ
-\\        
+\\
         E-mail: \{mh1613, mks211\}@imperial.ac.uk}
 \date{\today}
 
@@ -78,7 +78,7 @@
 % Plan on what to write
 %-------------------------------------------------------------------------------
 
-% See coursework instructions at: 
+% See coursework instructions at:
 % https://bb.imperial.ac.uk/bbcswebdav/pid-1009576-dt-content-rid-3417906_1/courses/DSS-EE4_68-16_17/PRCoursework2.pdf
 
 %-------------------------------------------------------------------------------
@@ -92,7 +92,7 @@
 %-------------------------------------------------------------------------------
 
 \begin{abstract}
-TODO ABSTRACT
+\todo{Use actual words} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est. Integer gravida, ligula id posuere semper, libero justo gravida lorem, non congue odio odio luctus lectus. In hac habitasse platea dictumst. Quisque auctor purus lectus, vitae condimentum libero.
 \end{abstract}
 
 %-------------------------------------------------------------------------------
@@ -100,12 +100,35 @@ TODO ABSTRACT
 %-------------------------------------------------------------------------------
 \section{Introduction}
 
-An introduction
+An introduction to be placed here. How long will it be?
 
 %-------------------------------------------------------------------------------
 % Distance Metrics
 %-------------------------------------------------------------------------------
 \section{Distance Metrics}
+\subsection{Data Preparation}
+The data given can be analysed in its raw form, but it can also be L2-normalised. This means that it is divided by its L2-distance. This is defined as in Equation \ref{eq:l2}, for a $p$-dimensional vector.
+\begin{align}
+  L_2 &= \sum_{i = 1}^{p} x_i \label{eq:l2}
+\end{align}
+The question then becomes whether to normalise all 178 instances by instance (per row) or by dimension (by column). If one were to visualise the data, normalising it by instance would place all points at a Euclidean distance of 1 from the origin. This would mean they would form a hypersphere. In contrast, normalising by dimension places shrinks the spread of the data so that every value fits in the range $[-1; 1]$. From the same source as was used with the Support Vector Machines (SVMs) \cite{scale}, the sensible thing is to normalise by dimension. This prevents any one dimension from becoming overbearing in future measurements. Additionally, it makes no sense to scale the data in one instance with itself, as this will still allow the dimensions with larger variance to dominate.
+
+\subsection{Covariances}
+From the unmodified data and the normalised data, the covariances can be calculated, simply by using the full set of data, or by focusing on each of the three class individually. Thus, for the two types of data, there are 4 covariance matrices: all the data, class 1, class2, and class 3. The way used to obtain the covariance matrices was the \texttt{cov} built-it function in MATLAB.
+
+For context, the way to interpret the data in a covariance matrix is to know that it will be a square, symmetric matrix, with dimensions equal to the number of dimensions in each data instance. The matrix, $S$, will have elements $s_{i, j}$, equal to covariance of the $i$-th and $j$-th dimension. The primary diagonal is the covariance of a dimension with itself, and is therefore the variance \cite{cov}.
+
+Analysing 13 by 13 tables of numbers is not easy. Therefore, a useful alternative is to view the matrices as colour maps, which are easily produced with MATLAB.
+
+\subsubsection{Unmodifed Training Data}
+Figure \ref{fig:covtrainingone} shows the color map for the 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{pic/covtraining.png}
+    \caption{Colour map of covariance of training data.}
+    \label{fig:covtrainingone}
+\end{figure}
 
 %-------------------------------------------------------------------------------
 % K-means clustering
@@ -117,7 +140,7 @@ An introduction
 %-------------------------------------------------------------------------------
 \section{Neural Network}
 
-% Using Matlab Neural Network toolbox create a network, train and test with the wine data. Vary the parameters of the network to minimize the classification error. Report the observations and compare to the results from Q1 and Q2. Generate another random split of train/test/validation data and repeat the experiment. 
+% Using Matlab Neural Network toolbox create a network, train and test with the wine data. Vary the parameters of the network to minimize the classification error. Report the observations and compare to the results from Q1 and Q2. Generate another random split of train/test/validation data and repeat the experiment.
 
 Neural networks are an often-used method of pattern recognition, due to their high accuracy, low error rates, and ease of use. They are flexible, and so can be adapted to most pattern recognition problems, such as the use of Convolutional Neural Networks (CNNs) in image recognition, an industry standard.
 
@@ -168,17 +191,17 @@ With randomly partitioned data, the most effective training algorithm is \textit
 \begin{tabular}{llllll}
 \hline
 \textbf{Algorithm} & \textbf{Neurons} & \textbf{Time to Train (s)} & \textbf{Accuracy} & \textbf{MSE} \\ \hline
-trainbfg & 15 & 0.15658 & 0.9 & 0.10695 \\ \hline 
-trainbfg & 20 & 0.23614 & 0.8 & 0.13496 \\ \hline 
-trainbfg & 25 & 0.82571 & 0.95 & 0.054725 \\ \hline 
-trainbfg & 30 & 0.76897 & 0.95 & 0.069127 \\ \hline 
+trainbfg & 15 & 0.15658 & 0.9 & 0.10695 \\ \hline
+trainbfg & 20 & 0.23614 & 0.8 & 0.13496 \\ \hline
+trainbfg & 25 & 0.82571 & 0.95 & 0.054725 \\ \hline
+trainbfg & 30 & 0.76897 & 0.95 & 0.069127 \\ \hline
 trainbfg & 35 & 0.70948 & 0.85 & 0.10906 \\ \hline
 
-traincgp & 15 & 0.066146 & 0.825 & 0.16928 \\ \hline 
-traincgp & 20 & 0.09904 & 0.875 & 0.12706 \\ \hline 
-traincgp & 25 & 0.10311 & 0.95 & 0.05694 \\ \hline 
-traincgp & 30 & 0.075015 & 0.85 & 0.19212 \\ \hline 
-traincgp & 35 & 0.11164 & 0.85 & 0.13576 \\ \hline 
+traincgp & 15 & 0.066146 & 0.825 & 0.16928 \\ \hline
+traincgp & 20 & 0.09904 & 0.875 & 0.12706 \\ \hline
+traincgp & 25 & 0.10311 & 0.95 & 0.05694 \\ \hline
+traincgp & 30 & 0.075015 & 0.85 & 0.19212 \\ \hline
+traincgp & 35 & 0.11164 & 0.85 & 0.13576 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -196,17 +219,17 @@ traincgp & 35 & 0.11164 & 0.85 & 0.13576 \\ \hline
 \begin{tabular}{llllll}
 \hline
 \textbf{Algorithm} & \textbf{Neurons} & \textbf{Time to Train (s)} & \textbf{Accuracy} & \textbf{MSE} \\ \hline
-trainbr & 15 & 5.8827 & 0.975 & 0.028823 \\ \hline 
-trainbr & 20 & 8.1333 & 0.975 & 0.020667 \\ \hline 
-trainbr & 25 & 14.6828 & 1 & 0.015294 \\ \hline 
-trainbr & 30 & 20.2646 & 0.975 & 0.021972 \\ \hline 
-trainbr & 35 & 28.5412 & 1 & 0.016915 \\ \hline 
+trainbr & 15 & 5.8827 & 0.975 & 0.028823 \\ \hline
+trainbr & 20 & 8.1333 & 0.975 & 0.020667 \\ \hline
+trainbr & 25 & 14.6828 & 1 & 0.015294 \\ \hline
+trainbr & 30 & 20.2646 & 0.975 & 0.021972 \\ \hline
+trainbr & 35 & 28.5412 & 1 & 0.016915 \\ \hline
 
-trainlm & 15 & 0.0657085 & 0.95 & 0.036084 \\ \hline 
-trainlm & 20 & 0.0607793 & 1 & 0.015435 \\ \hline 
-trainlm & 25 & 0.0679456 & 1 & 0.019838 \\ \hline 
-trainlm & 30 & 0.0846978 & 0.85 & 0.10142 \\ \hline 
-trainlm & 35 & 0.0921787 & 0.975 & 0.065321 \\ \hline 
+trainlm & 15 & 0.0657085 & 0.95 & 0.036084 \\ \hline
+trainlm & 20 & 0.0607793 & 1 & 0.015435 \\ \hline
+trainlm & 25 & 0.0679456 & 1 & 0.019838 \\ \hline
+trainlm & 30 & 0.0846978 & 0.85 & 0.10142 \\ \hline
+trainlm & 35 & 0.0921787 & 0.975 & 0.065321 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -245,7 +268,7 @@ feedforward & traincgp & 3 & 15 & 0.1105 & 0.01892 \\ \hline
 \end{tabular}
 \end{table}
 
-The standard partition shows that a different type of network has proved most effective. \textit{Patternnet} is the network that is intended for use in pattern recognition applications, such as this one. However, the MSE of standard partition is still greater than that attained by randomly partitioned data, which uses a fitting network with \textit{trainbr} algorithm as the most effective method, matching very closely with the results of the previous data set. In fact, the previous set of data showed a lower MSE using \textit{trainbr} with a single layer of 25 neurons, which was not investigated in the latter data set due to the large amount of training time required. 
+The standard partition shows that a different type of network has proved most effective. \textit{Patternnet} is the network that is intended for use in pattern recognition applications, such as this one. However, the MSE of standard partition is still greater than that attained by randomly partitioned data, which uses a fitting network with \textit{trainbr} algorithm as the most effective method, matching very closely with the results of the previous data set. In fact, the previous set of data showed a lower MSE using \textit{trainbr} with a single layer of 25 neurons, which was not investigated in the latter data set due to the large amount of training time required.
 
 Overall, the data shown in this section suggests that the most effective method of minimising error from a neural network is to randomly partition the data, and use a fitting network of a single layer of 25 neurons with the \textit{trainbr} training algorithm. It is possible that more layers of 25 neurons would increase accuracy, but at the cost of training and test time with a minimal decrease in MSE.
 
@@ -256,7 +279,7 @@ Overall, the data shown in this section suggests that the most effective method 
 %-------------------------------------------------------------------------------
 \section{Conclusion}
 
-A conclusion \cite{pca}. 
+A conclusion \cite{pca}.
 
 %-------------------------------------------------------------------------------
 % References
@@ -269,6 +292,62 @@ A conclusion \cite{pca}.
 %-------------------------------------------------------------------------------
 \onecolumn
 \section{Appendix} \label{sec:appendix}
+
+\subsection{All Colour Maps of Covariance Matrices}
+\begin{figure}[!ht]
+  \captionsetup[subfigure]{position=b}
+  \centering
+    \begin{subfigure}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{pic/covtraining.png}
+      \caption{Covariance of all.}
+      \label{fig:covtraining}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{pic/covclass1.png}
+      \caption{Covariance of Class 1.}
+      \label{fig:covclass1}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{pic/covclass2.png}
+      \caption{Covariance of Class 2.}
+      \label{fig:covclass2}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{pic/covclass3.png}
+      \caption{Covariance of Class 3.}
+      \label{fig:covclass3}
+    \end{subfigure}
+	\caption{Visualised color maps of covariance matrices from unmodified data.}
+  \label{fig:covtrainingall}
+\end{figure}
+
+\subsection{Nearest Neighbour Function Using L1 Metric}
+\lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_l1.m}
+
+\subsection{Nearest Neighbour Function Using L2 Metric}
+\lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_l2.m}
+\newpage
+
+\subsection{Nearest Neighbour Function Using Chi Squared Metric}
+\lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_chi.m}
+
+\subsection{Nearest Neighbour Function Using Histogram Intersection Metric}
+\lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_intersection.m}
+\newpage
+
+\subsection{Nearest Neighbour Function Using Correlation Metric}
+\lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_corr.m}
+
+\subsection{Nearest Cluster Function Using \texttt{pdist()}}
+\lstinputlisting[style=Matlab-editor]{src/nearest_cluster.m}
+\newpage
+
+\subsection{K-Means Clustering Function Using All Four Metrics}
+\lstinputlisting[style=Matlab-editor]{src/kmeanmetrics.m}
+\newpage
 
 \subsection*{Test set code for Task 3}
 \lstinputlisting[style=Matlab-editor]{src/task3_all.m}

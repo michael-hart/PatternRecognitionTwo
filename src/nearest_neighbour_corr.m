@@ -1,7 +1,7 @@
 function [ lbl ] = nearest_neighbour_corr( test_point, ...
                                       training_set, ...
                                       training_lbl )
-% NEAREST_NEIGHBOUR_CORR Find nearest training point of test point, L1
+% NEAREST_NEIGHBOUR_CORR Find nearest training point of test point.
 %   Obtains crosscorrelation distance of test point to each training point.
 %   Returns the class of the closest training point.
 %   Crosscorrelation is sum of products of elements.
