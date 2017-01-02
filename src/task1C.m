@@ -4,6 +4,11 @@ res_path = get_res_path();
 load(strjoin({res_path 'covariances.mat'}, filesep));
 load(strjoin({res_path 'means.mat'}, filesep));
 
+ % Save the resulting sets
+save(strjoin({res_path 'means.txt'}, filesep), 'mean_training', ...
+    'mean_l2', 'mean_class1', 'mean_class2', 'mean_class3', ... 
+    'mean_l2_class1', 'mean_l2_class2', 'mean_l2_class3', '-ascii');
+
 corr_training = corrcov(cov_training);
 corr_l2 = corrcov(cov_l2);
 corr_class1 = corrcov(cov_class1);
@@ -30,3 +35,4 @@ plot_colour(corr_class3, '../pic/corrclass3', 'Training Class 3 Correlation');
 plot_colour(corr_l2_class1, '../pic/corrl2class1', 'L2-Training Class 1 Correlation');
 plot_colour(corr_l2_class2, '../pic/corrl2class2', 'L2-Training Class 2 Correlation');
 plot_colour(corr_l2_class3, '../pic/corrl2class3', 'L2-Training Class 3 Correlation');
+close all;

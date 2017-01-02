@@ -1,4 +1,4 @@
-function [ ] = k_confusion_plotting( actual_class, all_guessed_class, filename, num_classes )
+function [ accuracies ] = k_confusion_plotting( actual_class, all_guessed_class, filename, num_classes )
 % CONFUSION_PLOTTING Takes class labels, converts them, then plots them.
 %   Input vectors of classes, column or row
 % 
@@ -11,8 +11,9 @@ function [ ] = k_confusion_plotting( actual_class, all_guessed_class, filename, 
         class_actual = actual_class(index);
         actual(class_actual, index) = 1;
     end;
-
     
+    accuracies = zeros(1, 4);
+
     for counter = 1:4
         guess = zeros(num_classes, N);
         guessed_class = all_guessed_class(:, counter);
@@ -34,6 +35,9 @@ function [ ] = k_confusion_plotting( actual_class, all_guessed_class, filename, 
         fig.PaperPositionMode = 'auto';
         new_filename = deblank(char(strcat(filename, columns(counter))));
         print(new_filename,'-dpng','-r0');
+        
+        % Save data
+        accuracies(counter) = sum(guessed_class == actual_class);
     end
 end
 
