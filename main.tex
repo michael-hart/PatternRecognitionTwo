@@ -121,7 +121,21 @@ An introduction
 
 Neural networks are an often-used method of pattern recognition, due to their high accuracy, low error rates, and ease of use. They are flexible, and so can be adapted to most pattern recognition problems, such as the use of Convolutional Neural Networks (CNNs) in image recognition, an industry standard.
 
-Neural networks take inspiration from biological neurons, which are interconnected and transmit information using sudden spikes in chemical levels. This is a process that can be simulated in software, including using MATLAB's neural network toolbox (NNT); this toolbox allows the creation, training and testing of various types of neural network.
+Neural networks take inspiration from biological neurons, which are interconnected and transmit information using sudden spikes in chemical levels. This is a process that can be simulated in software, including using MATLAB's neural network toolbox (NNT); this toolbox allows the creation, training and testing of various types of neural network. Figures \ref{fig:nnt_perf} and \ref{fig:nnt_vis} show the NNT performance evaluation and visualisation of an example network respectively, with two hidden layers each of 10 neurons in a fitting network configuration.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{pic/performance}
+    \caption{NNT Performance Evaluation}
+    \label{fig:nnt_perf}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{pic/view_twolayer}
+    \caption{NNT Network Visualisation}
+    \label{fig:nnt_vis}
+\end{figure}
 
 This section tests the use of neural networks to minimise the Mean Squared Error (MSE), as a measure of the performance of the network. First the number of hidden neurons in a single layer fitting network is varied to test performance; results for a standard partition are shown in Table \ref{tbl:unmixed}. The fitting network was used as one of the most flexible types offered by the NNT, and most networks perform with near-optimal results using only a single hidden layer. The code used to generate these results is shown in the Appendix.
 
