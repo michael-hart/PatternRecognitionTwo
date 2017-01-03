@@ -99,11 +99,16 @@
 % Introduction
 %-------------------------------------------------------------------------------
 \section{Introduction}
-An introduction to be placed here. Discuss data and partitioning. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
-\subsection{Nearest Neighbour Classification}
+There are a number of methods that can be used to classify data. The data set used is a set of 178 vectors, each containing 13 elements, describing wine. The data is split into 3 classes, the classes having 59, 71, and 48 instances each, respectively.
+
+The data was split into a training set, a validation set, and a testing set. This was in the ratio $118:20:40$. To ensure that each set received an appropriate mix of each class, the classes themselves were split. Class 1 was split into $39:7:13$ for training, validation, and testing, respectively. Class 2 was in $47:8:16$, and Class 3 was $32:5:11$.
+
+\subsection{Nearest Neighbour Distance Metrics Classification}
 The nearest neighbour (NN) classification system works by finding the closest training point to the test point, and assigning it the same class. The notion of ``closest'' is explored further with different distance metrics.
+
 \subsection{K-Means Clustering and Classification}
 K-means clustering works by clustering data points into a predetermined number of clusters. An initial $k$ number of centroids are first seeded, with each training point assigned to the closest centroid. Each centroid is changed to the value of the average of the points assigned to it. This is repeated until the points no longer change centroid, or a certain number of iterations have completed \cite{kmeans}.
+
 \subsection{Neural Networks}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
 
@@ -126,7 +131,7 @@ For context, the way to interpret the data in a covariance matrix is to know tha
 Analysing 13-by-13 tables of numbers is not easy. Therefore, a useful alternative is to view the matrices as colour maps, which are easily produced with MATLAB.
 
 \subsubsection{Unmodifed Training Data}
-Figure \ref{fig:covtrainingone} shows the color map for the covariance of the training matrix. The other 3 are found in the Appendix as Figure \ref{fig:covtrainingall} to conserve space. However, they are all like Figure \ref{fig:covtrainingone}. By not performing any scaling to the data, the dimension with the largest range, 13, has dominated the diagram.
+Figure \ref{fig:covtrainingone} shows the colour map for the covariance of the training matrix. The other 3 are found in the Appendix as Figure \ref{fig:covtrainingall} to conserve space. However, they are all like Figure \ref{fig:covtrainingone}. By not performing any scaling to the data, the dimension with the largest range, 13, has dominated the diagram.
 
 \begin{figure}[!ht]
     \centering
@@ -135,7 +140,7 @@ Figure \ref{fig:covtrainingone} shows the color map for the covariance of the tr
     \label{fig:covtrainingone}
 \end{figure}
 
-This is further seen when looking at the mean values in each dimension for the 4 sets of unmodified data, shown in Table \ref{tbl:trainingmean}. Dimension 13 has the largest magnitude, and this is the cause for the skewed data.
+This is further seen when looking at the mean values in each dimension for the 4 sets of unmodified data, shown in Table \ref{tbl:trainingmean}. Dimension 13 has the largest magnitude, and this is the cause for the skewed colour maps.
 
 \begin{table}[!ht]
 \centering
@@ -195,14 +200,15 @@ The same process is repeated with the normalised data. To save space, the covari
 
 The data's means are very much in the same range, which allows the covariances to be in the same range. This means displaying them all as the same scale is possible in the colour map. Knowing that a covariance of zero is a necessary, but not sufficient condition of independence, the dimension pairs that have the lowest covariances are the ones that are the most likely to be independent.
 
-Another clearer way to view the covariance matrix is to convert it to a correlation matrix. A correlation matrix displays 1 on the major diagonal, a dimensionless value in the range $[-1; 1]$. A value of $1$ suggests a positive linear relationship, and $-1$ a negative linear relationship. On the other hand, $0$ means no linear relationship at all.
+\subsubsection{Correlation Matrices and Analysis}
+Another clearer way to view the covariance matrix is to convert it to a correlation matrix, using the built-in function \texttt{corrcov()}. A correlation matrix displays 1 on the major diagonal, and it is a dimensionless value in the range $[-1; 1]$, as it is scaled by the dimensions' standard deviation. A value of $1$ suggests a positive linear relationship, and $-1$ a negative linear relationship. On the other hand, $0$ means no linear relationship at all.
 
 As it can be seen as a scaled version of the covariance, both the normalised data and unmodified data yielded identical correlation matrices. Once again, they can be found in the Appendix as Figure \ref{fig:corrall}. The trouble with this measurement is that it only ``detects'' linear relationships. Different dimension pairs may be dependent on some other function and this will not be reflected.
 
-While the images are not included in the main body of the report, the takeaway is that the covariance matrices, correlation matrices, and mean values by dimension all vary according to whether all the training data is used, or if it is separated by class. Indeed, those statistical measurements can be used to characterise groups of data.
+While the images are not included in the main body of the report, the takeaway is that the covariance matrices, correlation matrices, and mean values by dimension all vary according to whether all the training data is used, or if it is separated by class. Those statistical measurements can be used to characterise and describe groups of data, which means they can be used for classification.
 
 \subsection{Nearest Neighbour Classification}
-The Nearest Neighbour (NN) method takes each test data point and assigns a class based on the class of the closest training data point to it. Different measurements were used to represent this concept of ``closeness''. The first one is the L1 distance, or the Manhattan distance. This is expressed with Equation \ref{eq:l1} for 2 $p$-dimensional vectors, $x$ and $y$ \cite{metrics}.
+The Nearest Neighbour (NN) method takes each test data point and assigns it a class based on the class of the closest training data point to it. Different measurements were used to represent this concept of ``closeness''. The first one is the L1 distance, or the Manhattan distance. This is expressed with Equation \ref{eq:l1} for 2 $p$-dimensional vectors, $x$ and $y$ \cite{metrics}.
 
 \begin{align}
   L_1 \left( x, y \right) &= \sum_{i = 1}^{p} \lvert x_i  - y_i \rvert \label{eq:l1}
@@ -217,7 +223,7 @@ The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation 
   CrossCorr &= \sum_{i = 1}^{p} x_i y_i \label{eq:corr}
 \end{align}
 
-The fifth method, called the Mahalanobis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ where from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2} \cite{metrics}.
+The fifth method, called the Mahalanobis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ were from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2} \cite{metrics}.
 
 \begin{align}
   Maha \left( \mathbf{x}, \mathbf{y} \right) &= \left( \mathbf{x} - \mathbf{y} \right) ^T \Sigma^{-1} \left( \mathbf{x} - \mathbf{y} \right)\label{eq:maha}\\
@@ -246,7 +252,7 @@ Normalised & 90.00 & 87.50 & 95.00 & 87.50 & 95.00\\ \hline
 \end{tabular}
 \end{table}
 
-The first observation is that overall, using the normalised data yields a higher accuracy. However, overall, this is quite slight. Looking at the overall accuracies, the lowest value is 80\%, which is quite impressive for such a simple classification system. The metric with the highest accuracy both both sets of data is the Chi-Squared metric, while the lowest is the L2 one.
+The first observation is that overall, using the normalised data yields a higher accuracy. However, this is quite slight. Looking at the accuracies, the lowest value is 80\%, which is quite impressive for such a simple classification system. The metric with the highest accuracy with both sets of data is the Chi-Squared metric, while the lowest is the L2 one.
 
 \begin{table}[!ht]
 \centering
@@ -271,9 +277,9 @@ Transformation of the data through the covariance matrices of Class 3 yielded th
 
 As explained in the Introduction, K-means is a way of classifying data. There is a built-in function in MATLAB called \texttt{kmeans()} that takes in data, along with a $k$ value and returns the centroids after performing K-means clustering on it. This was used with the training data, before the testing data was classified using those centroids.
 
-As with the different distance metrics in the previous section, there are different metrics that MATLAB uses for determining the centroid positions. They are \texttt{sqeuclidean}, \texttt{cityblock}, \texttt{cosine}, and \texttt{correlation}. There are also corresponding \texttt{pdist()} variations, which return a distance value depending on the selected metric.
+As with the different distance metrics in the previous section, there are different metrics that MATLAB uses for determining the centroid positions. They are \texttt{sqeuclidean} (L2), \texttt{cityblock} (L1), \texttt{cosine}, and \texttt{correlation} \cite{kmeans}. There are also corresponding \texttt{pdist()} variations, which return a distance value depending on the selected metric \cite{pdist}.
 
-These two functions were combined in the function that can be found in the Appendix. The K-means clustering is performed for all 4 metrics, before the testing data is classified using the respective identical metric. It does not make sense to use other metrics in testing other than the one used for clustering as otherwise the notion of ``closest'' in the classification is different.
+These two functions were combined in the function that can be found in the Appendix. The K-means clustering is performed for all 4 metrics, before the testing data is classified using the respective identical metric to find the closest centroid. It does not make sense to use other metrics in testing other than the one used for clustering as otherwise the notion of ``closest'' in the classification is different.
 
 Different ``versions'' of the data can be used with this K-means clustering. The different types are shown in Table \ref{tbl:types}, while the Table \ref{tbl:k3} shows the classification accuracy for $k=3$.
 
@@ -329,7 +335,7 @@ Different ``versions'' of the data can be used with this K-means clustering. The
 \end{tabular}
 \end{table}
 
-Overall for $k=3$, the normalised data yielded a better result that the unmodified data, with the only outlier being type (d). From the average classification accuracy per metric type, the best metric is a close tie between the cityblock method (L1) and the cosine method. Additionally, transforming the data through a covariance matrix only works if the covariance is from a specific class, as all those data types outperformed (c) and (d). However, none of them outperformed untransformed data, with the exception of those transformed by the Class 3 covariance. This is simliar to the results from Table \ref{tbl:nnmaha}. The lower values of the scaled Class 3 covariance matrix are once again likely to be the cause, as explained earlier.
+Overall for $k=3$, the normalised data yielded a better result that the unmodified data, with the only outlier being type (d). From the average classification accuracy per metric type, the best metric is a close tie between \texttt{cityblock} and \texttt{cosine}. Additionally, transforming the data through a covariance matrix only works if the covariance is from a specific class, as all those data types outperformed (c) and (d). However, none of them outperformed untransformed data, with the exception of those transformed by the Class 3 covariance. This is similar to the results from Table \ref{tbl:nnmaha}. The lower values of the scaled Class 3 covariance matrix are once again likely to be the cause, as explained earlier.
 
 \begin{table}[!ht]
 \centering
@@ -352,9 +358,9 @@ Overall for $k=3$, the normalised data yielded a better result that the unmodifi
 \end{tabular}
 \end{table}
 
-For $k=10$, the difference is quite significant. Overall, there was better accuracy across the data types. Having more clusters than classes means that multiple clusters are assigned to a class. This can help to capture the data's nature, if a single class happens to contain data from two different sources, with different characteristics.
+For $k=10$, the difference is quite significant. Overall, there was better accuracy across the data types. Having more clusters than classes means that multiple clusters are assigned to a class. This can help to capture the data's nature, if a single class happens to contain data from two different sources, with different statistical characteristics.
 
- The metric with the highest average classification accuracy is the cityblock (L1) method. Scaling the data yields an improvement overall. Once again, the clear ``winner'' is the data type (j), which has been transformed using the covariance of the Class 3 training data.
+ The metric with the highest average classification accuracy is \texttt{cityblock}. Scaling the data yields an improvement overall. Once again, the clear ``winner'' is the data type (j), which has been transformed using the covariance of the Class 3 training data.
 
 %-------------------------------------------------------------------------------
 % Neural Network
