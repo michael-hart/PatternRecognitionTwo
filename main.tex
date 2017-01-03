@@ -99,8 +99,13 @@
 % Introduction
 %-------------------------------------------------------------------------------
 \section{Introduction}
-
-An introduction to be placed here. How long will it be?
+An introduction to be placed here. Discuss data and partitioning.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
+\subsection{Nearest Neighbour Classification}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor.
+\subsection{K-Means Clustering and Classification}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
+\subsection{Neural Networks}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
 
 %-------------------------------------------------------------------------------
 % Distance Metrics
@@ -109,19 +114,19 @@ An introduction to be placed here. How long will it be?
 \subsection{Data Preparation}
 The data given can be analysed in its raw form, but it can also be L2-normalised. This means that it is divided by its L2-distance. This is defined as in Equation \ref{eq:l2}, for a $p$-dimensional vector.
 \begin{align}
-  L_2 &= \sum_{i = 1}^{p} x_i \label{eq:l2}
+  L_2 &= \sum_{i = 1}^{p} \left( x_i \right) ^2 \label{eq:l2}
 \end{align}
 The question then becomes whether to normalise all 178 instances by instance (per row) or by dimension (by column). If one were to visualise the data, normalising it by instance would place all points at a Euclidean distance of 1 from the origin. This would mean they would form a hypersphere. In contrast, normalising by dimension places shrinks the spread of the data so that every value fits in the range $[-1; 1]$. From the same source as was used with the Support Vector Machines (SVMs) \cite{scale}, the sensible thing is to normalise by dimension. This prevents any one dimension from becoming overbearing in future measurements. Additionally, it makes no sense to scale the data in one instance with itself, as this will still allow the dimensions with larger variance to dominate.
 
 \subsection{Covariances}
-From the unmodified data and the normalised data, the covariances can be calculated, simply by using the full set of data, or by focusing on each of the three class individually. Thus, for the two types of data, there are 4 covariance matrices: all the data, class 1, class2, and class 3. The way used to obtain the covariance matrices was the \texttt{cov} built-it function in MATLAB.
+From the unmodified data and the normalised data, the covariances can be calculated, simply by using the full set of data, or by focusing on each of the three class individually. Thus, for the two types of data, there are 4 covariance matrices: all the data, class 1, class 2, and class 3. The way used to obtain the covariance matrices was the \texttt{cov} built-in function in MATLAB.
 
 For context, the way to interpret the data in a covariance matrix is to know that it will be a square, symmetric matrix, with dimensions equal to the number of dimensions in each data instance. The matrix, $S$, will have elements $s_{i, j}$, equal to covariance of the $i$-th and $j$-th dimension. The primary diagonal is the covariance of a dimension with itself, and is therefore the variance \cite{cov}.
 
-Analysing 13 by 13 tables of numbers is not easy. Therefore, a useful alternative is to view the matrices as colour maps, which are easily produced with MATLAB.
+Analysing 13 by 13 tables of numbers is not easy. Therefore, a useful alternative is to view the matrices as colour maps, which are easily produced with MATLAB. \todo{INCLUDE IN APPENDIX}
 
 \subsubsection{Unmodifed Training Data}
-Figure \ref{fig:covtrainingone} shows the color map for the 
+Figure \ref{fig:covtrainingone} shows the color map for the covariance of the training matrix. The other 3 are found in Appendix \ref{sec:covtraining}, to conserve space. However, they are all like Figure \ref{fig:covtrainingone}. By not performing any scaling to the data, the dimension with the largest range, 13, has dominated the diagram.
 
 \begin{figure}[!ht]
     \centering
@@ -129,6 +134,79 @@ Figure \ref{fig:covtrainingone} shows the color map for the
     \caption{Colour map of covariance of training data.}
     \label{fig:covtrainingone}
 \end{figure}
+
+This is further seen when looking at the mean values in each dimension for the 4 sets of unmodified data, shown in Table \ref{tbl:trainingmean}. Dimension 13 has the largest magnitude, and this is the cause for the skewed data.
+
+\begin{table}[!ht]
+\centering
+\caption{Means of Unmodified Data}
+\label{tbl:trainingmean}
+\begin{tabular}{|r|llll|}
+\hline
+\textbf{Dimension} & \textbf{All Training} & \textbf{Class 1} & \textbf{Class 2} & \textbf{Class 3} \\ \hline
+1 & 12.719 & 13.484 & 11.989 & 12.859\\
+2 & 2.262 & 1.959 & 1.846 & 3.242\\
+3 & 2.379 & 2.487 & 2.269 & 2.409\\
+4 & 19.506 & 17.541 & 20.013 & 21.156\\
+5 & 99.542 & 105.000 & 94.106 & 100.875\\
+6 & 2.277 & 2.783 & 2.286 & 1.647\\
+7 & 2.006 & 2.924 & 2.078 & 0.782\\
+8 & 0.357 & 0.291 & 0.358 & 0.438\\
+9 & 1.561 & 1.815 & 1.673 & 1.088\\
+10 & 4.824 & 5.253 & 2.959 & 7.040\\
+11 & 0.959 & 1.059 & 1.073 & 0.668\\
+12 & 2.601 & 3.132 & 2.799 & 1.663\\
+13 & 737.110 & 1070.385 & 522.213 & 646.562\\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Normalised Training Data}
+The same process is repeated with the normalised data. To save space, once again, the covariance matrices for the different classes can be found in Appendix \ref{sec:covtraining} as Figure \ref{fig:covl2all}, but Figure \ref{fig:covl2one} shows the colour plot for the covariance matrix of all the normalised training data. Along with that, Table \ref{tbl:l2mean} shows the mean values.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{pic/covl2.png}
+    \caption{Colour map of covariance of normalised training data.}
+    \label{fig:covl2one}
+\end{figure}
+
+\begin{table}[!ht]
+\centering
+\caption{Means of Normalised Data}
+\label{tbl:l2mean}
+\begin{tabular}{|r|llll|}
+\hline
+\textbf{Dimension} & \textbf{All Training} & \textbf{Class 1} & \textbf{Class 2} & \textbf{Class 3} \\ \hline
+1 & 0.073 & 0.078 & 0.069 & 0.074\\
+2 & 0.066 & 0.057 & 0.053 & 0.094\\
+3 & 0.075 & 0.078 & 0.071 & 0.076\\
+4 & 0.074 & 0.066 & 0.076 & 0.080\\
+5 & 0.074 & 0.078 & 0.070 & 0.075\\
+6 & 0.072 & 0.088 & 0.072 & 0.052\\
+7 & 0.067 & 0.097 & 0.069 & 0.026\\
+8 & 0.070 & 0.057 & 0.070 & 0.086\\
+9 & 0.069 & 0.080 & 0.074 & 0.048\\
+10 & 0.065 & 0.071 & 0.040 & 0.095\\
+11 & 0.073 & 0.081 & 0.082 & 0.051\\
+12 & 0.072 & 0.087 & 0.078 & 0.046\\
+13 & 0.068 & 0.099 & 0.048 & 0.060\\ \hline
+\end{tabular}
+\end{table}
+
+The data's means are very much in the same range, which allows the covariances to be in the same range. This means displaying them all as the same scale is possible in the colour map. Knowing that a covariance of zero is a necessary, but not sufficient condition of independence, the dimension pairs that have the lowest covariances are the ones that are the most likely to be independent. 
+
+\subsection{Nearest Neighbour Classification}
+Each test data point was assigned a class based on the class of the closest training data point to it. Different measurements were used to represent this concept of ``closeness''. The first one is the L1 distance, or the Manhattan distance. This is expressed with Equation \ref{eq:l1} for 2 $p$-dimensional vectors, $x$ and $y$.
+\begin{align}
+  L_1 \left( x, y \right) &= \sum_{i = 1}^{p} \lvert x_i  - y_i \rvert \label{eq:l1}
+\end{align}
+The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation \ref{eq:chi} shows the Chi-Squared formula, Equation \ref{eq:intersection} shows the histogram intersection formula, and finally Equation \ref{eq:corr} shows the correlation formula. The functions written to implement these metrics can be found in the Appendix.
+\begin{align}
+  L_2 \left( x, y \right) &= \sum_{i = 1}^{p} \left( x_i  - y_i \right) ^2 \label{eq:l22}\\
+  \mathcal{X}^2 \left( x, y \right) &= \frac{1}{2} \sum_{i = 1}^{p} \frac{\left( x_i - y_i \right) ^2 }{\left( x_i + y_i \right)} \label{eq:chi}\\
+  \cap \left( x, y \right) &= \sum_{i = 1}^{p} \min \left( x_i, y_i \right) \label{eq:intersection}\\
+  CrossCorr &= \sum_{i = 1}^{p} x_i y_i \label{eq:corr}
+\end{align}
 
 %-------------------------------------------------------------------------------
 % K-means clustering
@@ -293,29 +371,29 @@ A conclusion \cite{pca}.
 \onecolumn
 \section{Appendix} \label{sec:appendix}
 
-\subsection{All Colour Maps of Covariance Matrices}
+\subsection{All Colour Maps of Covariance Matrices}\label{sec:covtraining}
 \begin{figure}[!ht]
   \captionsetup[subfigure]{position=b}
   \centering
-    \begin{subfigure}{0.5\textwidth}
+    \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\textwidth]{pic/covtraining.png}
       \caption{Covariance of all.}
       \label{fig:covtraining}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.5\textwidth}
+    \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\textwidth]{pic/covclass1.png}
       \caption{Covariance of Class 1.}
       \label{fig:covclass1}
     \end{subfigure}
     \\
-    \begin{subfigure}{0.5\textwidth}
+    \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\textwidth]{pic/covclass2.png}
       \caption{Covariance of Class 2.}
       \label{fig:covclass2}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.5\textwidth}
+    \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\textwidth]{pic/covclass3.png}
       \caption{Covariance of Class 3.}
       \label{fig:covclass3}
@@ -323,6 +401,38 @@ A conclusion \cite{pca}.
 	\caption{Visualised color maps of covariance matrices from unmodified data.}
   \label{fig:covtrainingall}
 \end{figure}
+\newpage
+
+\begin{figure}[!ht]
+  \captionsetup[subfigure]{position=b}
+  \centering
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{pic/covl2.png}
+      \caption{Covariance of all.}
+      \label{fig:covl2}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{pic/covl2class1.png}
+      \caption{Covariance of Class 1.}
+      \label{fig:covl2class1}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{pic/covl2class2.png}
+      \caption{Covariance of Class 2.}
+      \label{fig:covl2class2}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{pic/covl2class3.png}
+      \caption{Covariance of Class 3.}
+      \label{fig:covl2class3}
+    \end{subfigure}
+	\caption{Visualised color maps of covariance matrices from L2-normalised data.}
+  \label{fig:covl2all}
+\end{figure}
+\newpage
 
 \subsection{Nearest Neighbour Function Using L1 Metric}
 \lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_l1.m}
