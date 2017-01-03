@@ -217,7 +217,7 @@ The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation 
   CrossCorr &= \sum_{i = 1}^{p} x_i y_i \label{eq:corr}
 \end{align}
 
-The fifth method, called the Mahalaonbis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ where from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2}.
+The fifth method, called the Mahalanobis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ were from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2}.
 
 \begin{align}
   Maha \left( \mathbf{x}, \mathbf{y} \right) &= \left( \mathbf{x} - \mathbf{y} \right) ^T \Sigma^{-1} \left( \mathbf{x} - \mathbf{y} \right)\label{eq:maha}\\
