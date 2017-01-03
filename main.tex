@@ -103,7 +103,7 @@ An introduction to be placed here. Discuss data and partitioning. Lorem ipsum do
 \subsection{Nearest Neighbour Classification}
 The nearest neighbour (NN) classification system works by finding the closest training point to the test point, and assigning it the same class. The notion of ``closest'' is explored further with different distance metrics.
 \subsection{K-Means Clustering and Classification}
-K-means works by clustering data points into a predetermined number of clusters. An initial $k$ number of centroids are first seeded, with each training point assigned to the closest centroid. Each centroid is changed to the value of the average of the points assigned to it. This is repeated until the points no longer change centroid, or a certain number of iterations have completed \cite{kmeans}.
+K-means clustering works by clustering data points into a predetermined number of clusters. An initial $k$ number of centroids are first seeded, with each training point assigned to the closest centroid. Each centroid is changed to the value of the average of the points assigned to it. This is repeated until the points no longer change centroid, or a certain number of iterations have completed \cite{kmeans}.
 \subsection{Neural Networks}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
 
@@ -116,14 +116,14 @@ The data given can be analysed in its raw form, but it can also be L2-normalised
 \begin{align}
   L_2 &= \sqrt{\sum_{i = 1}^{p} \left( x_i \right) ^2 }\label{eq:l2}
 \end{align}
-The question then becomes whether to normalise all 178 instances by instance (per row) or by dimension (by column). If one were to visualise the data, normalising it by instance would place all points at a Euclidean distance of 1 from the origin. This would mean they would form a hypersphere. In contrast, normalising by dimension places shrinks the spread of the data so that every value fits in the range $[-1; 1]$. From the same source as was used with the Support Vector Machines (SVMs) \cite{scale}, the sensible thing is to normalise by dimension. This prevents any one dimension from becoming overbearing in future measurements. Additionally, it makes no sense to scale the data in one instance with itself, as this will still allow the dimensions with larger variance to dominate.
+The question then becomes whether to normalise all 178 instances by instance (per row) or by dimension (by column). If one were to visualise the data, normalising it by instance would place all points at a Euclidean distance of 1 from the origin. This would mean they lie on the surface of a hypersphere. In contrast, normalising by dimension shrinks the spread of the data so that every value fits in the range $[-1; 1]$. From the same source as was used with the Support Vector Machines (SVMs) \cite{scale}, the sensible thing is to normalise by dimension. This prevents any one dimension from becoming overbearing in future measurements. Additionally, it makes no sense to scale the data in one instance with itself, as this will still allow the dimensions with larger variance to dominate.
 
 \subsection{Covariances}
-From the unmodified data and the normalised data, the covariances can be calculated, simply by using the full set of data, or by focusing on each of the three class individually. Thus, for the two types of data, there are 4 covariance matrices: all the data, class 1, class 2, and class 3. The way used to obtain the covariance matrices was the \texttt{cov} built-in function in MATLAB.
+From the unmodified data and the normalised data, the covariances can be calculated by using the full set of data, or by focusing on each of the three classes individually. Thus, for the two types of data, there are 4 covariance matrices: from all the data, Class 1, Class 2, and Class 3. The way used to obtain the covariance matrices was the \texttt{cov} built-in function in MATLAB.
 
 For context, the way to interpret the data in a covariance matrix is to know that it will be a square, symmetric matrix, with dimensions equal to the number of dimensions in each data instance. The matrix, $S$, will have elements $s_{i, j}$, equal to covariance of the $i$-th and $j$-th dimension. The primary diagonal is the covariance of a dimension with itself, and is therefore the variance \cite{cov}.
 
-Analysing 13 by 13 tables of numbers is not easy. Therefore, a useful alternative is to view the matrices as colour maps, which are easily produced with MATLAB. \todo{INCLUDE IN APPENDIX}
+Analysing 13-by-13 tables of numbers is not easy. Therefore, a useful alternative is to view the matrices as colour maps, which are easily produced with MATLAB.
 
 \subsubsection{Unmodifed Training Data}
 Figure \ref{fig:covtrainingone} shows the color map for the covariance of the training matrix. The other 3 are found in the Appendix as Figure \ref{fig:covtrainingall} to conserve space. However, they are all like Figure \ref{fig:covtrainingone}. By not performing any scaling to the data, the dimension with the largest range, 13, has dominated the diagram.
@@ -197,7 +197,7 @@ The data's means are very much in the same range, which allows the covariances t
 
 Another clearer way to view the covariance matrix is to convert it to a correlation matrix. A correlation matrix displays 1 on the major diagonal, a dimensionless value in the range $[-1; 1]$. A value of $1$ suggests a positive linear relationship, and $-1$ a negative linear relationship. On the other hand, $0$ means no linear relationship at all.
 
-As it can be seen as a scaled version of the covariance, both the normalised data and unmodified data yielded identical correlation matrices. Once again, they can be found in the Appendix as \ref{fig:corrall}. The trouble with this measurement is that it only ``detects'' linear relationships. Different dimension pairs may be dependent on some other function and this will not be reflected.
+As it can be seen as a scaled version of the covariance, both the normalised data and unmodified data yielded identical correlation matrices. Once again, they can be found in the Appendix as Figure \ref{fig:corrall}. The trouble with this measurement is that it only ``detects'' linear relationships. Different dimension pairs may be dependent on some other function and this will not be reflected.
 
 While the images are not included in the main body of the report, the takeaway is that the covariance matrices, correlation matrices, and mean values by dimension all vary according to whether all the training data is used, or if it is separated by class. Indeed, those statistical measurements can be used to characterise groups of data.
 
@@ -217,7 +217,7 @@ The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation 
   CrossCorr &= \sum_{i = 1}^{p} x_i y_i \label{eq:corr}
 \end{align}
 
-The fifth method, called the Mahalaonbis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ where from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2} \cite{metrics}.
+The fifth method, called the Mahalanobis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ where from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2} \cite{metrics}.
 
 \begin{align}
   Maha \left( \mathbf{x}, \mathbf{y} \right) &= \left( \mathbf{x} - \mathbf{y} \right) ^T \Sigma^{-1} \left( \mathbf{x} - \mathbf{y} \right)\label{eq:maha}\\
@@ -232,7 +232,7 @@ And as Equation \ref{eq:maha3} shows, if $A$ is decomposed into $G^TG$, it becom
 
 The inverses were taken (MATLAB's \texttt{inv()}) and decomposed using the Cholesky decomposition (MATLAB's \texttt{chol()}).
 
-The five metrics were used for NN classification with the normalised and unmodified data. Table \ref{tbl:nn} shows the accuracy. Table \ref{tbl:nnmaha} show the accuracy of the Mahalaonbis distance with different covariance matrices with the normalised and unmodified data. A full set of the confusion matrices is in the Appendix as Figures \ref{fig:nnconfuseunmod} and \ref{fig:nnconfusemod}.
+The five metrics were used for NN classification with the normalised and unmodified data. Table \ref{tbl:nn} shows the accuracy. Table \ref{tbl:nnmaha} show the accuracy of the Mahalanobis distance with different covariance matrices with the normalised and unmodified data. A full set of the confusion matrices is in the Appendix as Figures \ref{fig:nnconfuseunmod} and \ref{fig:nnconfusemod}.
 
 \begin{table}[!ht]
 \centering
@@ -250,7 +250,7 @@ The first observation is that overall, using the normalised data yields a higher
 
 \begin{table}[!ht]
 \centering
-\caption{Accuracy of Mahalaonbis Distance in NN Classification}
+\caption{Accuracy of Mahalanobis Distance in NN Classification}
 \label{tbl:nnmaha}
 \begin{tabular}{|r|llll|}
 \hline
@@ -260,7 +260,9 @@ The first observation is that overall, using the normalised data yields a higher
 \end{tabular}
 \end{table}
 
-\todo{Explain table above, and conclude NN}
+However, with Mahalanobis distance, the improvement from normalising data is no longer so apparent, working only for certain cases. This is because the applying the transformation already results in some scaling of the data \cite{metrics}.
+
+Transformation of the data through the covariance matrices of Class 3 yielded the highest accuracy for classification when applied to normalised data. Looking at the colour map in the Appendix shows how small its covariance values are (after normalisation). This means that the resulting $G$ transformation was such that each class on average moved away from each other.
 
 %-------------------------------------------------------------------------------
 % K-means clustering
@@ -273,46 +275,86 @@ As with the different distance metrics in the previous section, there are differ
 
 These two functions were combined in the function that can be found in the Appendix. The K-means clustering is performed for all 4 metrics, before the testing data is classified using the respective identical metric. It does not make sense to use other metrics in testing other than the one used for clustering as otherwise the notion of ``closest'' in the classification is different.
 
+Different ``versions'' of the data can be used with this K-means clustering. The different types are shown in Table \ref{tbl:types}, while the Table \ref{tbl:k3} shows the classification accuracy for $k=3$.
+
+% a is normal data
+% b is l2norm data
+% c is normal data mahalanobis transformed by covariance of l2 data
+% d is l2norm data mahalanobis transformed by covariance of l2 data
+% e is normal data mahalanobis transformed by covariance of class 1 l2 data
+% f is l2norm data mahalanobis transformed by covariance of class 1 l2 data
+% g is normal data mahalanobis transformed by covariance of class 2 l2 data
+% h is l2norm data mahalanobis transformed by covariance of class 2 l2 data
+% i is normal data mahalanobis transformed by covariance of class 3 l2 data
+% j is l2norm data mahalanobis transformed by covariance of class 3 l2 data
+
 \begin{table}[!ht]
 \centering
-\caption{Accuracy of Distance Metrics in K-Means Clustering for $k = 3$}
-\label{tbl:k3}
-\begin{tabular}{|r|llll|}
+\caption{Data types used in K-means clustering for classification.}
+\label{tbl:types}
+\begin{tabular}{|r|l|}
 \hline
-\textbf{Type of Data} & \textbf{Euclidean} & \textbf{Cityblock} & \textbf{Cosine} & \textbf{Correlation} \\ \hline
-1 & 75.00 & 75.00 & 75.00 & 72.50\\
-1 & 87.50 & 85.00 & 85.00 & 85.00\\
-1 & 75.00 & 75.00 & 72.50 & 72.50\\
-1 & 32.50 & 27.50 & 40.00 & 40.00\\
-1 & 72.50 & 75.00 & 72.50 & 72.50\\
-1 & 80.00 & 87.50 & 80.00 & 77.50\\
-1 & 75.00 & 75.00 & 72.50 & 62.50\\
-1 & 87.50 & 62.50 & 92.50 & 97.50\\
-1 & 75.00 & 75.00 & 72.50 & 62.50\\
-1 & 92.50 & 90.00 & 92.50 & 92.50\\ \hline
+\textbf{Data} & \textbf{Description} \\ \hline
+(a) & Unmodified Data\\
+(b) & Normalised Data\\
+(c) & Unmodified Data transformed from Normalised Data\\
+(d) & Normalised Data transformed from Normalised Data\\
+(e) & Unmodified Data transformed from Normalised Class 1 Data\\
+(f) & Normalised Data transformed from Normalised Class 1 Data\\
+(g) & Unmodified Data transformed from Normalised Class 2 Data\\
+(h) & Normalised Data transformed from Normalised Class 2 Data\\
+(i) & Unmodified Data transformed from Normalised Class 3 Data\\
+(j) & Normalised Data transformed from Normalised Class 3 Data\\\hline
 \end{tabular}
 \end{table}
 
 \begin{table}[!ht]
 \centering
-\caption{Accuracy of Distance Metrics in K-Means Clustering for $k = 10$}
-\label{tbl:k10}
-\begin{tabular}{|r|llll|}
+\caption{Accuracy of Distance Metrics in K-Means Clustering for $k = 3$}
+\label{tbl:k3}
+\begin{tabular}{|r|lllll|}
 \hline
-\textbf{Type of Data} & \textbf{Euclidean} & \textbf{Cityblock} & \textbf{Cosine} & \textbf{Correlation} \\ \hline
-1 & 92.50 & 90.00 & 92.50 & 92.50\\
-1 & 72.50 & 75.00 & 72.50 & 70.00\\
-1 & 90.00 & 90.00 & 90.00 & 77.50\\
-1 & 67.50 & 75.00 & 72.50 & 70.00\\
-1 & 57.50 & 40.00 & 55.00 & 32.50\\
-1 & 77.50 & 72.50 & 67.50 & 72.50\\
-1 & 92.50 & 87.50 & 87.50 & 92.50\\
-1 & 70.00 & 77.50 & 65.00 & 60.00\\
-1 & 82.50 & 90.00 & 92.50 & 90.00\\
-1 & 75.00 & 72.50 & 70.00 & 70.00\\
-1 & 90.00 & 90.00 & 97.50 & 97.50\\ \hline
+\textbf{Data} & \textbf{Euclidean} & \textbf{Cityblock} & \textbf{Cosine} & \textbf{Correlation} & \textbf{Average} \\ \hline
+(a) & 75.00 & 75.00 & 75.00 & 72.50 & 74.38\\
+(b) & 87.50 & 85.00 & 85.00 & 85.00 & 85.62\\
+(c) & 75.00 & 75.00 & 72.50 & 72.50 & 73.75\\
+(d) & 52.50 & 85.00 & 72.50 & 65.00 & 68.75\\
+(e) & 72.50 & 75.00 & 72.50 & 72.50 & 73.12\\
+(f) & 80.00 & 87.50 & 80.00 & 77.50 & 81.25\\
+(g) & 75.00 & 75.00 & 72.50 & 62.50 & 71.25\\
+(h) & 87.50 & 62.50 & 92.50 & 97.50 & 85.00\\
+(i) & 75.00 & 75.00 & 72.50 & 62.50 & 71.25\\
+(j) & 92.50 & 90.00 & 92.50 & 92.50 & 91.88\\
+\textbf{Average} & 77.25 & 78.50 & 78.75 & 76.00 & NIL \\ \hline
 \end{tabular}
 \end{table}
+
+Overall for $k=3$, the normalised data yielded a better result that the unmodified data, with the only outlier being type (d). From the average classification accuracy per metric type, the best metric is a close tie between the cityblock method (L1) and the cosine method. Additionally, transforming the data through a covariance matrix only works if the covariance is from a specific class, as all those data types outperformed (c) and (d). However, none of them outperformed untransformed data, with the exception of those transformed by the Class 3 covariance. This is simliar to the results from Table \ref{tbl:nnmaha}. The lower values of the scaled Class 3 covariance matrix are once again likely to be the cause, as explained earlier.
+
+\begin{table}[!ht]
+\centering
+\caption{Accuracy of Distance Metrics in K-Means Clustering for $k = 10$}
+\label{tbl:k10}
+\begin{tabular}{|r|lllll|}
+\hline
+\textbf{Data} & \textbf{Euclidean} & \textbf{Cityblock} & \textbf{Cosine} & \textbf{Correlation} & \textbf{Average}\\ \hline
+(a) & 72.50 & 75.00 & 72.50 & 70.00 & 72.50\\
+(b) & 90.00 & 90.00 & 90.00 & 77.50 & 86.88\\
+(c) & 67.50 & 75.00 & 72.50 & 70.00 & 71.25\\
+(d) & 77.50 & 80.00 & 80.00 & 85.00 & 80.62\\
+(e) & 77.50 & 72.50 & 67.50 & 72.50 & 72.50\\
+(f) & 92.50 & 87.50 & 87.50 & 92.50 & 90.00\\
+(g) & 70.00 & 77.50 & 65.00 & 60.00 & 68.12\\
+(h) & 82.50 & 90.00 & 92.50 & 90.00 & 88.75\\
+(i) & 75.00 & 72.50 & 70.00 & 70.00 & 71.88\\
+(j) & 90.00 & 90.00 & 97.50 & 97.50 & 93.75\\
+\textbf{Average} & 79.50 & 81.00 & 79.50 & 78.50 & NIL \\ \hline
+\end{tabular}
+\end{table}
+
+For $k=10$, the difference is quite significant. Overall, there was better accuracy across the data types. Having more clusters than classes means that multiple clusters are assigned to a class. This can help to capture the data's nature, if a single class happens to contain data from two different sources, with different characteristics.
+
+ The metric with the highest average classification accuracy is the cityblock (L1) method. Scaling the data yields an improvement overall. Once again, the clear ``winner'' is the data type (j), which has been transformed using the covariance of the Class 3 training data.
 
 %-------------------------------------------------------------------------------
 % Neural Network
@@ -598,22 +640,22 @@ A conclusion \cite{pca}.
     ~
     \begin{subfigure}{0.32\textwidth}
       \includegraphics[width=\textwidth]{pic/unmod_cov_l2.png}
-      \caption{Unmodified data with Mahalaonbis metric, L2 covariance.}
+      \caption{Unmodified data with Mahalanobis metric, L2 covariance.}
     \end{subfigure}
     \\
     \begin{subfigure}{0.32\textwidth}
       \includegraphics[width=\textwidth]{pic/unmod_cov_l2_class1.png}
-      \caption{Unmodified data with Mahalaonbis metric, L2 class 1 covariance.}
+      \caption{Unmodified data with Mahalanobis metric, L2 class 1 covariance.}
     \end{subfigure}
     ~
     \begin{subfigure}{0.32\textwidth}
       \includegraphics[width=\textwidth]{pic/unmod_cov_l2_class2.png}
-      \caption{Unmodified data with Mahalaonbis metric, L2 class 2 covariance.}
+      \caption{Unmodified data with Mahalanobis metric, L2 class 2 covariance.}
     \end{subfigure}
     ~
     \begin{subfigure}{0.32\textwidth}
       \includegraphics[width=\textwidth]{pic/unmod_cov_l2_class3.png}
-      \caption{Unmodified data with Mahalaonbis metric, L2 class 3 covariance.}
+      \caption{Unmodified data with Mahalanobis metric, L2 class 3 covariance.}
     \end{subfigure}
 	\caption{Confusion matrices for the different NN classification metrics. The overall classification success and error can be seen in the bottom right square of each matrix. }
   \label{fig:nnconfuseunmod}
@@ -650,22 +692,22 @@ A conclusion \cite{pca}.
     ~
     \begin{subfigure}{0.32\textwidth}
       \includegraphics[width=\textwidth]{pic/mod_cov_l2.png}
-      \caption{Normalised data with Mahalaonbis metric, L2 covariance.}
+      \caption{Normalised data with Mahalanobis metric, L2 covariance.}
     \end{subfigure}
     \\
     \begin{subfigure}{0.32\textwidth}
       \includegraphics[width=\textwidth]{pic/mod_cov_l2_class1.png}
-      \caption{Normalised data with Mahalaonbis metric, L2 class 1 covariance.}
+      \caption{Normalised data with Mahalanobis metric, L2 class 1 covariance.}
     \end{subfigure}
     ~
     \begin{subfigure}{0.32\textwidth}
       \includegraphics[width=\textwidth]{pic/mod_cov_l2_class2.png}
-      \caption{Normalised data with Mahalaonbis metric, L2 class 2 covariance.}
+      \caption{Normalised data with Mahalanobis metric, L2 class 2 covariance.}
     \end{subfigure}
     ~
     \begin{subfigure}{0.32\textwidth}
       \includegraphics[width=\textwidth]{pic/mod_cov_l2_class3.png}
-      \caption{Normalised data with Mahalaonbis metric, L2 class 3 covariance.}
+      \caption{Normalised data with Mahalanobis metric, L2 class 3 covariance.}
     \end{subfigure}
 	\caption{Confusion matrices for the different NN classification metrics. The overall classification success and error can be seen in the bottom right square of each matrix. }
   \label{fig:nnconfusemod}
