@@ -99,11 +99,11 @@
 % Introduction
 %-------------------------------------------------------------------------------
 \section{Introduction}
-An introduction to be placed here. Discuss data and partitioning.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
+An introduction to be placed here. Discuss data and partitioning. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
 \subsection{Nearest Neighbour Classification}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor.
+The nearest neighbour (NN) classification system works by finding the closest training point to the test point, and assigning it the same class. The notion of ``closest'' is explored further with different distance metrics.
 \subsection{K-Means Clustering and Classification}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
+K-means works by clustering data points into a predetermined number of clusters. An initial $k$ number of centroids are first seeded, with each training point assigned to the closest centroid. Each centroid is changed to the value of the average of the points assigned to it. This is repeated until the points no longer change centroid, or a certain number of iterations have completed \cite{kmeans}.
 \subsection{Neural Networks}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus libero, vel facilisis lacus. Cras imperdiet, enim vitae consequat pharetra, dui odio cursus mi, finibus tristique est sapien a dolor. Donec eu dui in elit tempor volutpat id non sapien. Aenean volutpat lectus eu lacinia tincidunt. Donec at libero volutpat, tempus magna ac, gravida est.
 
@@ -202,13 +202,13 @@ As it can be seen as a scaled version of the covariance, both the normalised dat
 While the images are not included in the main body of the report, the takeaway is that the covariance matrices, correlation matrices, and mean values by dimension all vary according to whether all the training data is used, or if it is separated by class. Indeed, those statistical measurements can be used to characterise groups of data.
 
 \subsection{Nearest Neighbour Classification}
-The Nearest Neighbour (NN) method takes each test data point and assigns a class based on the class of the closest training data point to it. Different measurements were used to represent this concept of ``closeness''. The first one is the L1 distance, or the Manhattan distance. This is expressed with Equation \ref{eq:l1} for 2 $p$-dimensional vectors, $x$ and $y$.
+The Nearest Neighbour (NN) method takes each test data point and assigns a class based on the class of the closest training data point to it. Different measurements were used to represent this concept of ``closeness''. The first one is the L1 distance, or the Manhattan distance. This is expressed with Equation \ref{eq:l1} for 2 $p$-dimensional vectors, $x$ and $y$ \cite{metrics}.
 
 \begin{align}
   L_1 \left( x, y \right) &= \sum_{i = 1}^{p} \lvert x_i  - y_i \rvert \label{eq:l1}
 \end{align}
 
-The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation \ref{eq:chi} shows the Chi-Squared formula, Equation \ref{eq:intersection} shows the histogram intersection formula, and finally Equation \ref{eq:corr} shows the correlation formula. The functions written to implement these metrics are in the Appendix.
+The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation \ref{eq:chi} shows the Chi-Squared formula, Equation \ref{eq:intersection} shows the histogram intersection formula, and finally Equation \ref{eq:corr} shows the correlation formula \cite{metrics}. The functions written to implement these metrics are in the Appendix.
 
 \begin{align}
   L_2 \left( x, y \right) &= \sum_{i = 1}^{p} \left( x_i  - y_i \right) ^2 \label{eq:l22}\\
@@ -217,7 +217,7 @@ The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation 
   CrossCorr &= \sum_{i = 1}^{p} x_i y_i \label{eq:corr}
 \end{align}
 
-The fifth method, called the Mahalaonbis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ where from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2}.
+The fifth method, called the Mahalaonbis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ where from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2} \cite{metrics}.
 
 \begin{align}
   Maha \left( \mathbf{x}, \mathbf{y} \right) &= \left( \mathbf{x} - \mathbf{y} \right) ^T \Sigma^{-1} \left( \mathbf{x} - \mathbf{y} \right)\label{eq:maha}\\
@@ -228,16 +228,48 @@ The fifth method, called the Mahalaonbis distance, defined for vectors $\mathbf{
   &= L_2\left( G\mathbf{x}, G\mathbf{y} \right) \label{eq:maha3}
 \end{align}
 
-And as Equation \ref{eq:maha3} shows, if $A$ is decomposed into $G^TG$, it becomes a transformation to apply to the data before performing the L2 distance metric. This is what was done as well for the NN classification. 4 covariance matrices were obtained from the normalised training data. One was from all of it, and the other three were for each of the classes.
+And as Equation \ref{eq:maha3} shows, if $A$ is decomposed into $G^TG$, it becomes a transformation to apply to the data before performing the L2 distance metric. This is what was done as well for the NN classification. 4 covariance matrices were obtained from the normalised training data. One was from all of it, and the other three were for each of the classes \cite{metrics}.
 
 The inverses were taken (MATLAB's \texttt{inv()}) and decomposed using the Cholesky decomposition (MATLAB's \texttt{chol()}).
 
-The five metrics were used for NN classification with the normalised and unmodified data. Table \ref{tbl:nn} shows the accuracy. Table \ref{tbl:nnmaha} show the accuracy of the Mahalaonbis distance with different covariance matrices with the normalised and unmodified data. A full set of the confusion matrices is in the Appendix as Figure \ref{fig:nnconfuse}.
+The five metrics were used for NN classification with the normalised and unmodified data. Table \ref{tbl:nn} shows the accuracy. Table \ref{tbl:nnmaha} show the accuracy of the Mahalaonbis distance with different covariance matrices with the normalised and unmodified data. A full set of the confusion matrices is in the Appendix as Figures \ref{fig:nnconfuseunmod} and \ref{fig:nnconfusemod}.
+
+\begin{table}[!ht]
+\centering
+\caption{Accuracy of Distance Metrics in NN Classification}
+\label{tbl:nn}
+\begin{tabular}{|r|lllll|}
+\hline
+\textbf{Type of Data} & \textbf{L1} & \textbf{L2} & \textbf{Chi-Squared} & \textbf{Intersection} & \textbf{Correlation}\\ \hline
+Unmodified & 85.00 & 80.00 & 90.00 & 90.00 & 87.50\\
+Normalised & 90.00 & 87.50 & 95.00 & 87.50 & 95.00\\ \hline
+\end{tabular}
+\end{table}
+
+The first observation is that overall, using the normalised data yields a higher accuracy. However, overall, this is quite slight. Looking at the overall accuracies, the lowest value is 80\%, which is quite impressive for such a simple classification system. The metric with the highest accuracy both both sets of data is the Chi-Squared metric, while the lowest is the L2 one.
+
+\begin{table}[!ht]
+\centering
+\caption{Accuracy of Mahalaonbis Distance in NN Classification}
+\label{tbl:nnmaha}
+\begin{tabular}{|r|llll|}
+\hline
+\textbf{Covariance Used} & L2 Training & L2 Class 1 & L2 Class 2 & L2 Class 3\\ \hline
+\textbf{Unmodified} & 82.50 & 77.50 & 80.00 & 82.50\\
+\textbf{Normalised} & 80.00 & 90.00 & 77.50 & 97.50\\ \hline
+\end{tabular}
+\end{table}
+
+\todo{Explain table above, and conclude NN}
 
 %-------------------------------------------------------------------------------
 % K-means clustering
 %-------------------------------------------------------------------------------
 \section{K-means clustering}
+
+As explained in the Introduction, K-means is a way of classifying data. There is a built-in function in MATLAB called \texttt{kmeans()} that takes in data, along with a $k$ value and returns the centroids after performing K-means clustering on it. This was used with the training data, before the testing data was classified using those centroids.
+
+As with the different distance metrics in the previous section, there are different metrics that MATLAB uses for determining the centroid positions. They are \texttt{sqeuclidean}, \texttt{cityblock}, \texttt{sqeuclidean}
 
 \begin{table}[!ht]
 \centering
@@ -582,7 +614,7 @@ A conclusion \cite{pca}.
       \caption{Unmodified data with Mahalaonbis metric, L2 class 3 covariance.}
     \end{subfigure}
 	\caption{Confusion matrices for the different NN classification metrics. The overall classification success and error can be seen in the bottom right square of each matrix. }
-  \label{fig:nnconfuse}
+  \label{fig:nnconfuseunmod}
 \end{figure}
 \newpage
 
@@ -634,7 +666,7 @@ A conclusion \cite{pca}.
       \caption{Normalised data with Mahalaonbis metric, L2 class 3 covariance.}
     \end{subfigure}
 	\caption{Confusion matrices for the different NN classification metrics. The overall classification success and error can be seen in the bottom right square of each matrix. }
-  \label{fig:nnconfuse}
+  \label{fig:nnconfusemod}
 \end{figure}
 \newpage
 
