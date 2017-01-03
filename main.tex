@@ -114,7 +114,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac faucibus lib
 \subsection{Data Preparation}
 The data given can be analysed in its raw form, but it can also be L2-normalised. This means that it is divided by its L2-distance. This is defined as in Equation \ref{eq:l2}, for a $p$-dimensional vector.
 \begin{align}
-  L_2 &= \sum_{i = 1}^{p} \left( x_i \right) ^2 \label{eq:l2}
+  L_2 &= \sqrt{\sum_{i = 1}^{p} \left( x_i \right) ^2 }\label{eq:l2}
 \end{align}
 The question then becomes whether to normalise all 178 instances by instance (per row) or by dimension (by column). If one were to visualise the data, normalising it by instance would place all points at a Euclidean distance of 1 from the origin. This would mean they would form a hypersphere. In contrast, normalising by dimension places shrinks the spread of the data so that every value fits in the range $[-1; 1]$. From the same source as was used with the Support Vector Machines (SVMs) \cite{scale}, the sensible thing is to normalise by dimension. This prevents any one dimension from becoming overbearing in future measurements. Additionally, it makes no sense to scale the data in one instance with itself, as this will still allow the dimensions with larger variance to dominate.
 
@@ -126,7 +126,7 @@ For context, the way to interpret the data in a covariance matrix is to know tha
 Analysing 13 by 13 tables of numbers is not easy. Therefore, a useful alternative is to view the matrices as colour maps, which are easily produced with MATLAB. \todo{INCLUDE IN APPENDIX}
 
 \subsubsection{Unmodifed Training Data}
-Figure \ref{fig:covtrainingone} shows the color map for the covariance of the training matrix. The other 3 are found in Appendix \ref{sec:covtraining}, to conserve space. However, they are all like Figure \ref{fig:covtrainingone}. By not performing any scaling to the data, the dimension with the largest range, 13, has dominated the diagram.
+Figure \ref{fig:covtrainingone} shows the color map for the covariance of the training matrix. The other 3 are found in the Appendix as Figure \ref{fig:covtrainingall} to conserve space. However, they are all like Figure \ref{fig:covtrainingone}. By not performing any scaling to the data, the dimension with the largest range, 13, has dominated the diagram.
 
 \begin{figure}[!ht]
     \centering
@@ -161,7 +161,7 @@ This is further seen when looking at the mean values in each dimension for the 4
 \end{table}
 
 \subsubsection{Normalised Training Data}
-The same process is repeated with the normalised data. To save space, once again, the covariance matrices for the different classes can be found in Appendix \ref{sec:covtraining} as Figure \ref{fig:covl2all}, but Figure \ref{fig:covl2one} shows the colour plot for the covariance matrix of all the normalised training data. Along with that, Table \ref{tbl:l2mean} shows the mean values.
+The same process is repeated with the normalised data. To save space, the covariance matrices for the different classes can be found in the Appendix as Figure \ref{fig:covl2all}, but Figure \ref{fig:covl2one} shows the colour plot for the covariance matrix of all the normalised training data. Along with that, Table \ref{tbl:l2mean} shows the mean values.
 
 \begin{figure}[!ht]
     \centering
@@ -193,14 +193,23 @@ The same process is repeated with the normalised data. To save space, once again
 \end{tabular}
 \end{table}
 
-The data's means are very much in the same range, which allows the covariances to be in the same range. This means displaying them all as the same scale is possible in the colour map. Knowing that a covariance of zero is a necessary, but not sufficient condition of independence, the dimension pairs that have the lowest covariances are the ones that are the most likely to be independent. 
+The data's means are very much in the same range, which allows the covariances to be in the same range. This means displaying them all as the same scale is possible in the colour map. Knowing that a covariance of zero is a necessary, but not sufficient condition of independence, the dimension pairs that have the lowest covariances are the ones that are the most likely to be independent.
+
+Another clearer way to view the covariance matrix is to convert it to a correlation matrix. A correlation matrix displays 1 on the major diagonal, a dimensionless value in the range $[-1; 1]$. A value of $1$ suggests a positive linear relationship, and $-1$ a negative linear relationship. On the other hand, $0$ means no linear relationship at all.
+
+As it can be seen as a scaled version of the covariance, both the normalised data and unmodified data yielded identical correlation matrices. Once again, they can be found in the Appendix as \ref{fig:corrall}. The trouble with this measurement is that it only ``detects'' linear relationships. Different dimension pairs may be dependent on some other function and this will not be reflected.
+
+While the images are not included in the main body of the report, the takeaway is that the covariance matrices, correlation matrices, and mean values by dimension all vary according to whether all the training data is used, or if it is separated by class. Indeed, those statistical measurements can be used to characterise groups of data.
 
 \subsection{Nearest Neighbour Classification}
-Each test data point was assigned a class based on the class of the closest training data point to it. Different measurements were used to represent this concept of ``closeness''. The first one is the L1 distance, or the Manhattan distance. This is expressed with Equation \ref{eq:l1} for 2 $p$-dimensional vectors, $x$ and $y$.
+The Nearest Neighbour (NN) method takes each test data point and assigns a class based on the class of the closest training data point to it. Different measurements were used to represent this concept of ``closeness''. The first one is the L1 distance, or the Manhattan distance. This is expressed with Equation \ref{eq:l1} for 2 $p$-dimensional vectors, $x$ and $y$.
+
 \begin{align}
   L_1 \left( x, y \right) &= \sum_{i = 1}^{p} \lvert x_i  - y_i \rvert \label{eq:l1}
 \end{align}
-The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation \ref{eq:chi} shows the Chi-Squared formula, Equation \ref{eq:intersection} shows the histogram intersection formula, and finally Equation \ref{eq:corr} shows the correlation formula. The functions written to implement these metrics can be found in the Appendix.
+
+The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation \ref{eq:chi} shows the Chi-Squared formula, Equation \ref{eq:intersection} shows the histogram intersection formula, and finally Equation \ref{eq:corr} shows the correlation formula. The functions written to implement these metrics are in the Appendix.
+
 \begin{align}
   L_2 \left( x, y \right) &= \sum_{i = 1}^{p} \left( x_i  - y_i \right) ^2 \label{eq:l22}\\
   \mathcal{X}^2 \left( x, y \right) &= \frac{1}{2} \sum_{i = 1}^{p} \frac{\left( x_i - y_i \right) ^2 }{\left( x_i + y_i \right)} \label{eq:chi}\\
@@ -208,10 +217,68 @@ The second is the L2, or Euclidean distance, in Equation \ref{eq:l22}. Equation 
   CrossCorr &= \sum_{i = 1}^{p} x_i y_i \label{eq:corr}
 \end{align}
 
+The fifth method, called the Mahalaonbis distance, defined for vectors $\mathbf{x} = [x_1, x_2, \ldots x_p]$ and $\mathbf{y} = [y_1, y_2, \ldots y_p]$ as shown in Equation \ref{eq:maha}. Originally, $\mathbf{x}$ and $\mathbf{y}$ where from the same set of data, and $\Sigma$ was the covariance matrix of that set of data. However, it can be generalised to use any positive semi-definite matrix (needed to ensure that the distance is always more than zero), $A$, shown in Equation \ref{eq:maha2}.
+
+\begin{align}
+  Maha \left( \mathbf{x}, \mathbf{y} \right) &= \left( \mathbf{x} - \mathbf{y} \right) ^T \Sigma^{-1} \left( \mathbf{x} - \mathbf{y} \right)\label{eq:maha}\\
+  \Sigma &= \text{Covariance Matrix}\notag\\
+  Maha \left( \mathbf{x}, \mathbf{y} \right)&= \left( \mathbf{x} - \mathbf{y} \right) ^T A \left( \mathbf{x} - \mathbf{y}\right)\label{eq:maha2}\\
+  &= \left( \mathbf{x} - \mathbf{y} \right) ^T G^T G \left( \mathbf{x} - \mathbf{y}\right)\notag\\
+  &= \left( G\mathbf{x} - G\mathbf{y} \right) ^T \left( G\mathbf{x} - G\mathbf{y}\right)\notag\\
+  &= L_2\left( G\mathbf{x}, G\mathbf{y} \right) \label{eq:maha3}
+\end{align}
+
+And as Equation \ref{eq:maha3} shows, if $A$ is decomposed into $G^TG$, it becomes a transformation to apply to the data before performing the L2 distance metric. This is what was done as well for the NN classification. 4 covariance matrices were obtained from the normalised training data. One was from all of it, and the other three were for each of the classes.
+
+The inverses were taken (MATLAB's \texttt{inv()}) and decomposed using the Cholesky decomposition (MATLAB's \texttt{chol()}).
+
+The five metrics were used for NN classification with the normalised and unmodified data. Table \ref{tbl:nn} shows the accuracy. Table \ref{tbl:nnmaha} show the accuracy of the Mahalaonbis distance with different covariance matrices with the normalised and unmodified data. A full set of the confusion matrices is in the Appendix as Figure \ref{fig:nnconfuse}.
+
 %-------------------------------------------------------------------------------
 % K-means clustering
 %-------------------------------------------------------------------------------
 \section{K-means clustering}
+
+\begin{table}[!ht]
+\centering
+\caption{Accuracy of Distance Metrics in K-Means Clustering for $k = 3$}
+\label{tbl:k3}
+\begin{tabular}{|r|llll|}
+\hline
+\textbf{Type of Data} & \textbf{Euclidean} & \textbf{Cityblock} & \textbf{Cosine} & \textbf{Correlation} \\ \hline
+1 & 75.00 & 75.00 & 75.00 & 72.50\\
+1 & 87.50 & 85.00 & 85.00 & 85.00\\
+1 & 75.00 & 75.00 & 72.50 & 72.50\\
+1 & 32.50 & 27.50 & 40.00 & 40.00\\
+1 & 72.50 & 75.00 & 72.50 & 72.50\\
+1 & 80.00 & 87.50 & 80.00 & 77.50\\
+1 & 75.00 & 75.00 & 72.50 & 62.50\\
+1 & 87.50 & 62.50 & 92.50 & 97.50\\
+1 & 75.00 & 75.00 & 72.50 & 62.50\\
+1 & 92.50 & 90.00 & 92.50 & 92.50\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\caption{Accuracy of Distance Metrics in K-Means Clustering for $k = 10$}
+\label{tbl:k10}
+\begin{tabular}{|r|llll|}
+\hline
+\textbf{Type of Data} & \textbf{Euclidean} & \textbf{Cityblock} & \textbf{Cosine} & \textbf{Correlation} \\ \hline
+1 & 92.50 & 90.00 & 92.50 & 92.50\\
+1 & 72.50 & 75.00 & 72.50 & 70.00\\
+1 & 90.00 & 90.00 & 90.00 & 77.50\\
+1 & 67.50 & 75.00 & 72.50 & 70.00\\
+1 & 57.50 & 40.00 & 55.00 & 32.50\\
+1 & 77.50 & 72.50 & 67.50 & 72.50\\
+1 & 92.50 & 87.50 & 87.50 & 92.50\\
+1 & 70.00 & 77.50 & 65.00 & 60.00\\
+1 & 82.50 & 90.00 & 92.50 & 90.00\\
+1 & 75.00 & 72.50 & 70.00 & 70.00\\
+1 & 90.00 & 90.00 & 97.50 & 97.50\\ \hline
+\end{tabular}
+\end{table}
 
 %-------------------------------------------------------------------------------
 % Neural Network
@@ -369,9 +436,9 @@ A conclusion \cite{pca}.
 % Appendix(ces)
 %-------------------------------------------------------------------------------
 \onecolumn
-\section{Appendix} \label{sec:appendix}
+\section*{Appendix}
 
-\subsection{All Colour Maps of Covariance Matrices}\label{sec:covtraining}
+\subsection*{All Colour Maps of Covariance Matrices}
 \begin{figure}[!ht]
   \captionsetup[subfigure]{position=b}
   \centering
@@ -434,28 +501,165 @@ A conclusion \cite{pca}.
 \end{figure}
 \newpage
 
-\subsection{Nearest Neighbour Function Using L1 Metric}
+\subsection*{All Colour Maps of Correlation Matrices}
+\begin{figure}[!ht]
+  \captionsetup[subfigure]{position=b}
+  \centering
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{pic/corrl2.png}
+      \caption{Correlation of all.}
+      \label{fig:corrtraining}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{pic/corrclass1.png}
+      \caption{Correlation of Class 1.}
+      \label{fig:corrclass1}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{pic/corrclass2.png}
+      \caption{Correlation of Class 2.}
+      \label{fig:corrclass2}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{pic/corrclass3.png}
+      \caption{Correlation of Class 3.}
+      \label{fig:corrclass3}
+    \end{subfigure}
+	\caption{Visualised color maps of correlations matrices from data. As correlation is a normalised value, the colour maps are identical for both modified and unmodified data. }
+  \label{fig:corrall}
+\end{figure}
+\newpage
+
+\subsection*{Confusion Matrices From NN Classification}
+\begin{figure}[!ht]
+  \captionsetup[subfigure]{position=b}
+  \centering
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_l1.png}
+      \caption{Unmodified data with L1 metric. }
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_l2.png}
+      \caption{Unmodified data with L2 metric.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_chi.png}
+      \caption{Unmodified data with Chi-Squared metric.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_inter.png}
+      \caption{Unmodified data with Intersection metric.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_corr.png}
+      \caption{Unmodified data with Correlation metric.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_cov_l2.png}
+      \caption{Unmodified data with Mahalaonbis metric, L2 covariance.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_cov_l2_class1.png}
+      \caption{Unmodified data with Mahalaonbis metric, L2 class 1 covariance.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_cov_l2_class2.png}
+      \caption{Unmodified data with Mahalaonbis metric, L2 class 2 covariance.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/unmod_cov_l2_class3.png}
+      \caption{Unmodified data with Mahalaonbis metric, L2 class 3 covariance.}
+    \end{subfigure}
+	\caption{Confusion matrices for the different NN classification metrics. The overall classification success and error can be seen in the bottom right square of each matrix. }
+  \label{fig:nnconfuse}
+\end{figure}
+\newpage
+
+\begin{figure}[!ht]
+  \captionsetup[subfigure]{position=b}
+  \centering
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_l1.png}
+      \caption{Normalised data with L1 metric. }
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_l2.png}
+      \caption{Normalised data with L2 metric.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_chi.png}
+      \caption{Normalised data with Chi-Squared metric.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_inter.png}
+      \caption{Normalised data with Intersection metric.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_corr.png}
+      \caption{Normalised data with Correlation metric.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_cov_l2.png}
+      \caption{Normalised data with Mahalaonbis metric, L2 covariance.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_cov_l2_class1.png}
+      \caption{Normalised data with Mahalaonbis metric, L2 class 1 covariance.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_cov_l2_class2.png}
+      \caption{Normalised data with Mahalaonbis metric, L2 class 2 covariance.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.32\textwidth}
+      \includegraphics[width=\textwidth]{pic/mod_cov_l2_class3.png}
+      \caption{Normalised data with Mahalaonbis metric, L2 class 3 covariance.}
+    \end{subfigure}
+	\caption{Confusion matrices for the different NN classification metrics. The overall classification success and error can be seen in the bottom right square of each matrix. }
+  \label{fig:nnconfuse}
+\end{figure}
+\newpage
+
+\subsection*{Nearest Neighbour Function Using L1 Metric}
 \lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_l1.m}
 
-\subsection{Nearest Neighbour Function Using L2 Metric}
+\subsection*{Nearest Neighbour Function Using L2 Metric}
 \lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_l2.m}
 \newpage
 
-\subsection{Nearest Neighbour Function Using Chi Squared Metric}
+\subsection*{Nearest Neighbour Function Using Chi Squared Metric}
 \lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_chi.m}
 
-\subsection{Nearest Neighbour Function Using Histogram Intersection Metric}
+\subsection*{Nearest Neighbour Function Using Histogram Intersection Metric}
 \lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_intersection.m}
 \newpage
 
-\subsection{Nearest Neighbour Function Using Correlation Metric}
+\subsection*{Nearest Neighbour Function Using Correlation Metric}
 \lstinputlisting[style=Matlab-editor]{src/nearest_neighbour_corr.m}
 
-\subsection{Nearest Cluster Function Using \texttt{pdist()}}
+\subsection*{Nearest Cluster Function Using \texttt{pdist()}}
 \lstinputlisting[style=Matlab-editor]{src/nearest_cluster.m}
 \newpage
 
-\subsection{K-Means Clustering Function Using All Four Metrics}
+\subsection*{K-Means Clustering Function Using All Four Metrics}
 \lstinputlisting[style=Matlab-editor]{src/kmeanmetrics.m}
 \newpage
 
