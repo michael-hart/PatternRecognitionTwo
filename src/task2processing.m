@@ -44,6 +44,7 @@ close all;
 
 % Create numbers
 percentages = 100* accuracies ./ 40;
+mean_percentages = mean(percentages, 2);
+final = [ones(20 ,1) percentages mean_percentages];
 % Save
-save(strjoin({res_path 'task2successpercent.txt'}, filesep), ...
-    'percentages', '-ascii');
+dlmwrite(strjoin({res_path 'task2accuracy.txt'}, filesep), final, 'delimiter','&', 'precision','%.2f');
