@@ -45,13 +45,13 @@ for index = 1:40
     distance_maha(index, 4) = nearest_neighbour_l2(g_class3_test(index, :), g_class3_training, l_training);
 end
 
-% Apply transformations for unmodified
+% Apply transformations for modified
 g_l2_training = (g * l2_training')';
 g_l2_class1_training = (g_class1 * l2_training')';
 g_l2_class2_training = (g_class2 * l2_training')';
 g_l2_class3_training = (g_class3 * l2_training')';
 
-g_l2_test = (g * test')';
+g_l2_test = (g * l2_test')';
 g_l2_class1_test = (g_class1 * l2_test')';
 g_l2_class2_test = (g_class2 * l2_test')';
 g_l2_class3_test = (g_class3 * l2_test')';
