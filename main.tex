@@ -269,7 +269,9 @@ The first observation is that overall, using the normalised data yields a higher
 
 As explained in the Introduction, K-means is a way of classifying data. There is a built-in function in MATLAB called \texttt{kmeans()} that takes in data, along with a $k$ value and returns the centroids after performing K-means clustering on it. This was used with the training data, before the testing data was classified using those centroids.
 
-As with the different distance metrics in the previous section, there are different metrics that MATLAB uses for determining the centroid positions. They are \texttt{sqeuclidean}, \texttt{cityblock}, \texttt{sqeuclidean}
+As with the different distance metrics in the previous section, there are different metrics that MATLAB uses for determining the centroid positions. They are \texttt{sqeuclidean}, \texttt{cityblock}, \texttt{cosine}, and \texttt{correlation}. There are also corresponding \texttt{pdist()} variations, which return a distance value depending on the selected metric.
+
+These two functions were combined in the function that can be found in the Appendix. The K-means clustering is performed for all 4 metrics, before the testing data is classified using the respective identical metric. It does not make sense to use other metrics in testing other than the one used for clustering as otherwise the notion of ``closest'' in the classification is different. 
 
 \begin{table}[!ht]
 \centering
